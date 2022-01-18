@@ -12,6 +12,7 @@ import 'package:active_ecommerce_flutter/repositories/sliders_repository.dart';
 import 'package:active_ecommerce_flutter/repositories/category_repository.dart';
 import 'package:active_ecommerce_flutter/repositories/product_repository.dart';
 import 'package:active_ecommerce_flutter/app_config.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:active_ecommerce_flutter/custom/toast_component.dart';
 import 'package:toast/toast.dart';
@@ -85,12 +86,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     fetchFeaturedProducts();
     fetchAllCategory();
   }
-   void previous(){
-      carousleController.previousPage();
-   }
-    void next(){
+
+  void previous() {
+    carousleController.previousPage();
+  }
+
+  void next() {
     carousleController.nextPage();
-    }
+  }
 
   fetchCarouselImages() async {
     var carouselResponse = await SlidersRepository().getSliders();
@@ -250,15 +253,18 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                       ),
                                       ElevatedButton(
                                         onPressed: () {
-                                          Navigator.push(context, MaterialPageRoute(builder: (context)=> CategoryList()));
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      CategoryList()));
                                         },
                                         style: ElevatedButton.styleFrom(
                                             minimumSize: Size(80, 35),
-                                          primary: Colors.red,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(30)
-                                          )
-                                        ),
+                                            primary: Colors.red,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(30))),
                                         child: Text('More'),
                                       )
                                     ],
@@ -291,132 +297,282 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                                     scontroller:
                                                         _featuredProductScrollController))
                                         : Stack(
-                                      alignment: Alignment.center,
+                                            alignment: Alignment.center,
                                             children: [
                                               CarouselSlider.builder(
                                                   options: CarouselOptions(
-                                                      viewportFraction: .5,
-                                                      enlargeCenterPage:
-                                                          true),
+                                                      viewportFraction: 1,
+                                                      enlargeCenterPage: true),
                                                   carouselController:
                                                       carousleController,
                                                   itemCount:
                                                       _allCategoryList.length,
-                                                  itemBuilder: (context,
-                                                      index, realIndex) {
-                                                    return Padding(
-                                                      padding:
-                                                          const EdgeInsets
-                                                                  .symmetric(
-                                                              horizontal: 3),
-                                                      child: GestureDetector(
-                                                        onTap: () {
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) {
-                                                            return CategoryProducts(
-                                                              category_id:
-                                                                  _allCategoryList[
-                                                                          index]
-                                                                      .id,
-                                                              category_name:
-                                                                  _allCategoryList[
-                                                                          index]
-                                                                      .name,
-                                                            );
-                                                          }));
-                                                        },
-                                                        child: Card(
-                                                          clipBehavior: Clip
-                                                              .antiAliasWithSaveLayer,
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            side: new BorderSide(
-                                                                color: MyTheme
-                                                                    .light_grey,
-                                                                width: 1.0),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        16.0),
-                                                          ),
-                                                          elevation: 0.0,
-                                                          child: Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: <
-                                                                Widget>[
-                                                              Container(
-                                                                  child: ClipRRect(
-                                                                      borderRadius: BorderRadius.vertical(top: Radius.circular(16), bottom: Radius.zero),
-                                                                      child: FadeInImage.assetNetwork(
-                                                                        height:
-                                                                            100,
-                                                                        placeholder:
-                                                                            'assets/placeholder.png',
-                                                                        image: AppConfig.BASE_PATH + _allCategoryList[index].icon == ''
-                                                                            ? AppConfig.BASE_PATH + _allCategoryList[index].banner
-                                                                            : AppConfig.BASE_PATH + _allCategoryList[index].icon,
-                                                                        fit: BoxFit
-                                                                            .cover,
-                                                                      ))),
-                                                              Padding(
-                                                                padding: EdgeInsets
-                                                                    .fromLTRB(
-                                                                        8,
-                                                                        8,
-                                                                        8,
-                                                                        4),
-                                                                child:
-                                                                    Container(
-                                                                  // height: 32,
-                                                                  child: Text(
-                                                                    _allCategoryList[
-                                                                            index]
-                                                                        .name,
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .center,
-                                                                    overflow:
-                                                                        TextOverflow
-                                                                            .ellipsis,
-                                                                    maxLines:
-                                                                        2,
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            11,
-                                                                        color:
-                                                                            MyTheme.font_grey),
-                                                                  ),
-                                                                ),
+                                                  itemBuilder: (context, index,
+                                                      realIndex) {
+                                                    return Row(
+                                                      children: [
+                                                        Expanded(
+                                                          child:
+                                                              GestureDetector(
+                                                            onTap: () {
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) {
+                                                                return CategoryProducts(
+                                                                  category_id:
+                                                                      _allCategoryList[
+                                                                              index]
+                                                                          .id,
+                                                                  category_name:
+                                                                      _allCategoryList[
+                                                                              index]
+                                                                          .name,
+                                                                );
+                                                              }));
+                                                            },
+                                                            child: Card(
+                                                              clipBehavior: Clip
+                                                                  .antiAliasWithSaveLayer,
+                                                              shape:
+                                                                  RoundedRectangleBorder(
+                                                                side: new BorderSide(
+                                                                    color: MyTheme
+                                                                        .light_grey,
+                                                                    width: 1.0),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            16.0),
                                                               ),
-                                                            ],
+                                                              elevation: 0.0,
+                                                              child: Column(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: <
+                                                                    Widget>[
+                                                                  Container(
+                                                                      child: ClipRRect(
+                                                                          borderRadius: BorderRadius.vertical(top: Radius.circular(16), bottom: Radius.zero),
+                                                                          child: FadeInImage.assetNetwork(
+                                                                            height:
+                                                                                100,
+                                                                            placeholder:
+                                                                                'assets/placeholder.png',
+                                                                            image: AppConfig.BASE_PATH + _allCategoryList[index].icon == ''
+                                                                                ? AppConfig.BASE_PATH + _allCategoryList[index].banner
+                                                                                : AppConfig.BASE_PATH + _allCategoryList[index].icon,
+                                                                            fit:
+                                                                                BoxFit.cover,
+                                                                          ))),
+                                                                  Padding(
+                                                                    padding: EdgeInsets
+                                                                        .fromLTRB(
+                                                                            8,
+                                                                            8,
+                                                                            8,
+                                                                            4),
+                                                                    child:
+                                                                        Container(
+                                                                      // height: 32,
+                                                                      child:
+                                                                          Text(
+                                                                        _allCategoryList[index]
+                                                                            .name,
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                        maxLines:
+                                                                            2,
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                11,
+                                                                            color:
+                                                                                MyTheme.font_grey),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Text('\$140',
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              11,
+                                                                          color:
+                                                                              Colors.red)),
+                                                                  Expanded(
+                                                                      child: RatingBar
+                                                                          .builder(
+                                                                    itemBuilder:
+                                                                        (context,
+                                                                                _) =>
+                                                                            Icon(
+                                                                      Icons
+                                                                          .star,
+                                                                      color: Colors
+                                                                          .yellow,
+                                                                              size: 10,
+                                                                    ),
+                                                                        initialRating: 2,
+                                                                        minRating: 1, onRatingUpdate: (double value) {  },
+                                                                        maxRating: 5,
+                                                                        itemSize: 20,
+                                                                  ))
+                                                                ],
+                                                              ),
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
+                                                        Expanded(
+                                                          child:
+                                                              GestureDetector(
+                                                            onTap: () {
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) {
+                                                                return CategoryProducts(
+                                                                  category_id:
+                                                                      _allCategoryList[index +
+                                                                              1]
+                                                                          .id,
+                                                                  category_name:
+                                                                      _allCategoryList[index +
+                                                                              1]
+                                                                          .name,
+                                                                );
+                                                              }));
+                                                            },
+                                                            child: Card(
+                                                              clipBehavior: Clip
+                                                                  .antiAliasWithSaveLayer,
+                                                              shape:
+                                                                  RoundedRectangleBorder(
+                                                                side: new BorderSide(
+                                                                    color: MyTheme
+                                                                        .light_grey,
+                                                                    width: 1.0),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            16.0),
+                                                              ),
+                                                              elevation: 0.0,
+                                                              child: Column(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: <
+                                                                    Widget>[
+                                                                  Container(
+                                                                      child: ClipRRect(
+                                                                          borderRadius: BorderRadius.vertical(top: Radius.circular(16), bottom: Radius.zero),
+                                                                          child: FadeInImage.assetNetwork(
+                                                                            height:
+                                                                                100,
+                                                                            placeholder:
+                                                                                'assets/placeholder.png',
+                                                                            image: AppConfig.BASE_PATH + _allCategoryList[index + 1].icon == ''
+                                                                                ? AppConfig.BASE_PATH + _allCategoryList[index + 1].banner
+                                                                                : AppConfig.BASE_PATH + _allCategoryList[index + 1].icon,
+                                                                            fit:
+                                                                                BoxFit.cover,
+                                                                          ))),
+                                                                  Padding(
+                                                                    padding: EdgeInsets
+                                                                        .fromLTRB(
+                                                                            8,
+                                                                            8,
+                                                                            8,
+                                                                            4),
+                                                                    child:
+                                                                        Container(
+                                                                      // height: 32,
+                                                                      child:
+                                                                          Text(
+                                                                        _allCategoryList[index +
+                                                                                1]
+                                                                            .name,
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                        maxLines:
+                                                                            2,
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                11,
+                                                                            color:
+                                                                                MyTheme.font_grey),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Text('\$140',
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              11,
+                                                                          color:
+                                                                              Colors.red)),
+                                                                  Expanded(
+                                                                      child: RatingBar
+                                                                          .builder(
+                                                                    itemBuilder:
+                                                                        (context,
+                                                                                _) =>
+                                                                            Icon(
+                                                                      Icons
+                                                                          .star,
+                                                                      color: Colors
+                                                                          .yellow,
+                                                                    ),
+                                                                        initialRating: 2,
+                                                                        minRating: 1, onRatingUpdate: (double value) {  },
+                                                                        maxRating: 5,
+                                                                        itemSize: 20,
+                                                                  ))
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
                                                     );
                                                   }),
                                               Center(
                                                 child: Row(
                                                   mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
                                                     ElevatedButton(
                                                       onPressed: previous,
-                                                      style: ElevatedButton.styleFrom(shape:CircleBorder(),primary: Colors.white),
-                                                      child: Icon(Icons
-                                                          .arrow_back_ios_outlined,color: Colors.black,),
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                              shape:
+                                                                  CircleBorder(),
+                                                              primary:
+                                                                  Colors.white),
+                                                      child: Icon(
+                                                        Icons
+                                                            .arrow_back_ios_outlined,
+                                                        color: Colors.black,
+                                                      ),
                                                     ),
                                                     ElevatedButton(
                                                         onPressed: next,
-                                                        style: ElevatedButton.styleFrom(shape:CircleBorder(),primary: Colors.white),
-
-                                                        child: Icon(Icons
-                                                            .arrow_forward_ios_outlined,color: Colors.black,))
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                                shape:
+                                                                    CircleBorder(),
+                                                                primary: Colors
+                                                                    .white),
+                                                        child: Icon(
+                                                          Icons
+                                                              .arrow_forward_ios_outlined,
+                                                          color: Colors.black,
+                                                        ))
                                                   ],
                                                 ),
                                               )
