@@ -203,6 +203,57 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                Divider(
+                                  color: Colors.grey,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 10, bottom: 10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Container(
+                                        child: Row(
+                                          children: [
+                                            Icon(Icons.home,color: Colors.red,),
+                                            Text('Home',style: TextStyle(
+                                              fontSize: 16
+                                            ),)
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        child: Row(
+                                          children: [
+                                            Icon(Icons.campaign,color: Colors.red,),
+                                            Text('Campaign',style: TextStyle(
+                                                fontSize: 16
+                                            ),)
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        child: Row(
+                                          children: [
+                                            Icon(Icons.local_offer,color: Colors.red,),
+                                            Text('Offers',style: TextStyle(
+                                                fontSize: 16
+                                            ),)
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        child: Row(
+                                          children: [
+                                            Icon(Icons.video_call,color: Colors.red,),
+                                            Text('Live',style: TextStyle(
+                                                fontSize: 16
+                                            ),)
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
                                 Text(
                                   AppLocalizations.of(context)
                                       .home_screen_featured_categories,
@@ -1089,20 +1140,34 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             statusBarHeight -
             (MediaQuery.of(context).viewPadding.top > 40 ? 16.0 : 16.0),
         //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
-        child: Container(
-          child: Padding(
-              padding: app_language_rtl.$
-                  ? const EdgeInsets.only(top: 14.0, bottom: 14, left: 12)
-                  : const EdgeInsets.only(top: 14.0, bottom: 14, right: 12),
-              // when notification bell will be shown , the right padding will cease to exist.
-              child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return Filter();
-                    }));
-                  },
-                  child: buildHomeSearchBox(context))),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              child: Padding(
+                padding: app_language_rtl.$
+                    ? const EdgeInsets.only(top: 14.0, bottom: 14, left: 12)
+                    : const EdgeInsets.only(top: 14.0, bottom: 14, right: 12),
+                child: Image.asset('assets/ebhubon.png'),
+              ),
+            ),
+            
+            Container(
+              child: Padding(
+                  padding: app_language_rtl.$
+                      ? const EdgeInsets.only(top: 14.0, bottom: 14, left: 12)
+                      : const EdgeInsets.only(top: 14.0, bottom: 14, right: 12),
+                  // when notification bell will be shown , the right padding will cease to exist.
+                  child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return Filter();
+                        }));
+                      },
+                      child: buildHomeSearchBox(context))),
+            ),
+          ],
         ),
       ),
       elevation: 0.0,
@@ -1132,37 +1197,43 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   }
 
   buildHomeSearchBox(BuildContext context) {
-    return TextField(
-      onTap: () {
+    return IconButton(
+      onPressed: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return Filter();
         }));
       },
       autofocus: false,
-      decoration: InputDecoration(
-          hintText: AppLocalizations.of(context).home_screen_search,
-          hintStyle: TextStyle(fontSize: 12.0, color: MyTheme.textfield_grey),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: MyTheme.textfield_grey, width: 0.5),
-            borderRadius: const BorderRadius.all(
-              const Radius.circular(16.0),
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: MyTheme.textfield_grey, width: 1.0),
-            borderRadius: const BorderRadius.all(
-              const Radius.circular(16.0),
-            ),
-          ),
-          prefixIcon: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Icon(
+      // decoration: InputDecoration(
+      //     hintText: AppLocalizations.of(context).home_screen_search,
+      //     hintStyle: TextStyle(fontSize: 12.0, color: MyTheme.textfield_grey),
+      //     enabledBorder: OutlineInputBorder(
+      //       borderSide: BorderSide(color: MyTheme.textfield_grey, width: 0.5),
+      //       borderRadius: const BorderRadius.all(
+      //         const Radius.circular(16.0),
+      //       ),
+      //     ),
+      //     focusedBorder: OutlineInputBorder(
+      //       borderSide: BorderSide(color: MyTheme.textfield_grey, width: 1.0),
+      //       borderRadius: const BorderRadius.all(
+      //         const Radius.circular(16.0),
+      //       ),
+      //     ),
+      //     prefixIcon: Padding(
+      //       padding: const EdgeInsets.all(8.0),
+      //       child: Icon(
+      //         Icons.search,
+      //         color: MyTheme.textfield_grey,
+      //         size: 20,
+      //       ),
+      //     ),
+      //
+      //     icontentPadding: EdgeInsets.all(0.0)),
+      icon: Icon(
               Icons.search,
               color: MyTheme.textfield_grey,
               size: 20,
             ),
-          ),
-          contentPadding: EdgeInsets.all(0.0)),
     );
   }
 
