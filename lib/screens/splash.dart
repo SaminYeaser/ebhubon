@@ -65,11 +65,11 @@ class _SplashState extends State<Splash> {
 
 
       //navigateAfterFuture: loadFromFuture(), //uncomment this
-      title: Text(
-        "V " + _packageInfo.version,
-        style: TextStyle(
-            fontWeight: FontWeight.bold, fontSize: 14.0, color: Colors.white),
-      ),
+      // title: Text(
+      //   "V " + _packageInfo.version,
+      //   style: TextStyle(
+      //       fontWeight: FontWeight.bold, fontSize: 14.0, color: Colors.white),
+      // ),
       useLoader: false,
       loadingText: Text(
         AppConfig.copyright_text,
@@ -79,9 +79,9 @@ class _SplashState extends State<Splash> {
           color: Colors.white,
         ),
       ),
-      image: Image.asset("assets/splash_screen_logo.png"),
-      backgroundImage:
-          Image.asset("assets/splash_login_registration_background_image.png"),
+      image: Image.asset("assets/ebhubon_white.png"),
+      // backgroundImage:
+      //     Image.asset("assets/splash_login_registration_background_image.png"),
       backgroundColor: MyTheme.splash_screen_color,
       photoSize: 60.0,
       backgroundPhotoSize: 140.0,
@@ -346,11 +346,11 @@ class _CustomSplashScreenState extends State<CustomSplashScreen> {
                                 radius: widget.photoSize,
                               ),
                             ),
-                            widget.title,
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                            ),
-                            widget.loadingText
+                            // widget.title,
+                            // Padding(
+                            //   padding: const EdgeInsets.only(top: 10.0),
+                            // ),
+                            // widget.loadingText
                           ],
                         )),
                   ),

@@ -33,26 +33,28 @@ class _ProductCardState extends State<ProductCard> {
          //clipBehavior: Clip.antiAliasWithSaveLayer,
         shape: RoundedRectangleBorder(
           side: new BorderSide(color: MyTheme.light_grey, width: 1.0),
-          borderRadius: BorderRadius.circular(16.0),
+          borderRadius: BorderRadius.circular(10.0),
         ),
         elevation: 0.0,
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Container(
-                  width: double.infinity,
-                  //height: 158,
-                  height: (( MediaQuery.of(context).size.width - 28 ) / 2) + 2,
-                  child: ClipRRect(
-                    clipBehavior: Clip.hardEdge,
-                      borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(16), bottom: Radius.zero),
-                      child: FadeInImage.assetNetwork(
-                        placeholder: 'assets/placeholder.png',
-                        image: AppConfig.BASE_PATH + widget.image,
-                        fit: BoxFit.cover,
-                      ))),
+              Expanded(
+                child: Container(
+                    // width: double.infinity,
+                    //height: 158,
+                    // height: (( MediaQuery.of(context).size.width - 28 ) / 2) + 10,
+                    child: ClipRRect(
+                      clipBehavior: Clip.hardEdge,
+                        borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(10), bottom: Radius.zero),
+                        child: FadeInImage.assetNetwork(
+                          placeholder: 'assets/placeholder.png',
+                          image: AppConfig.BASE_PATH + widget.image,
+                          fit: BoxFit.cover,
+                        ))),
+              ),
               Container(
                 height: 90,
                 child: Column(

@@ -38,7 +38,7 @@ class _MainState extends State<Main> {
     ),
     Home(),
     Cart(has_bottomnav: true),
-    Profile()
+    Profile(),
   ];
 
   void onTapped(int i) {
@@ -69,32 +69,32 @@ class _MainState extends State<Main> {
         child: Scaffold(
           extendBody: true,
           body: _children[_currentIndex],
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           //specify the location of the FAB
-          floatingActionButton: Visibility(
-            visible: MediaQuery.of(context).viewInsets.bottom ==
-                0.0, // if the kyeboard is open then hide, else show
-            child: FloatingActionButton(
-              backgroundColor: MyTheme.accent_color,
-              onPressed: () {},
-              tooltip: "start FAB",
-              child: Container(
-                  margin: EdgeInsets.all(0.0),
-                  child: IconButton(
-                      icon: new Image.asset('assets/square_logo.png'),
-                      tooltip: 'Action',
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return Filter(
-                            selected_filter: "sellers",
-                          );
-                        }));
-                      })),
-              elevation: 0.0,
-            ),
-          ),
+          // floatingActionButton: Visibility(
+          //   visible: MediaQuery.of(context).viewInsets.bottom ==
+          //       0.0, // if the kyeboard is open then hide, else show
+          //   child: FloatingActionButton(
+          //     backgroundColor: MyTheme.accent_color,
+          //     onPressed: () {},
+          //     tooltip: "start FAB",
+          //     child: Container(
+          //         margin: EdgeInsets.all(0.0),
+          //         child: IconButton(
+          //             icon: new Image.asset('assets/square_logo.png'),
+          //             tooltip: 'Action',
+          //             onPressed: () {
+          //               Navigator.push(context, MaterialPageRoute(builder: (context) {
+          //                 return Filter(
+          //                   selected_filter: "sellers",
+          //                 );
+          //               }));
+          //             })),
+          //     elevation: 0.0,
+          //   ),
+          // ),
           bottomNavigationBar: BottomAppBar(
-            color: Colors.transparent,
+            // color: Colors.transparent,
             clipBehavior: Clip.antiAlias,
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
@@ -140,14 +140,11 @@ class _MainState extends State<Main> {
                       //   ),
                       // ),
                   ),
-                  BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.circle,
-                      color: Colors.transparent,
-                    ),
-                    label: ''
-                    // title: Text(""),
-                  ),
+                  // BottomNavigationBarItem(
+                  //   icon: Image.asset('assets/square_logo.png'),
+                  //   label: ''
+                  //   // title: Text(""),
+                  // ),
                   BottomNavigationBarItem(
                       icon: Image.asset(
                         "assets/cart.png",
@@ -164,6 +161,15 @@ class _MainState extends State<Main> {
                       //     style: TextStyle(fontSize: 12),
                       //   ),
                       // ),
+                  ),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.notifications,
+                      color: _currentIndex == 5
+                        ? Theme.of(context).accentColor
+                        : Color.fromRGBO(153, 153, 153, 1),
+                      ),
+                    // label: '${AppLocalizations.of(context).main_screen_bottom_navigation_pr}'
+                    label: 'Notification'
                   ),
                   BottomNavigationBarItem(
                       icon: Image.asset(

@@ -32,17 +32,23 @@ import 'package:photo_view/photo_view.dart';
 import 'package:active_ecommerce_flutter/screens/brand_products.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'filter.dart';
+
 
 class ProductDetails extends StatefulWidget {
   int id;
+  final String title;
+  bool show_back_button;
+  bool go_back;
 
-  ProductDetails({Key key, this.id}) : super(key: key);
+  ProductDetails({Key key, this.id, this.title, this.show_back_button = true, this.go_back = true}) : super(key: key);
 
   @override
   _ProductDetailsState createState() => _ProductDetailsState();
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool _showCopied = false;
   String _appbarPriceString = ". . .";
   int _currentImage = 0;
@@ -695,7 +701,8 @@ class _ProductDetailsState extends State<ProductDetails> {
     return Directionality(
       textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
-          bottomNavigationBar: buildBottomAppBar(context, _addedToCartSnackbar),
+          key: _scaffoldKey,
+          // bottomNavigationBar: buildBottomAppBar(context, _addedToCartSnackbar),
           backgroundColor: Colors.white,
           appBar: buildAppBar(statusBarHeight, context),
           body: RefreshIndicator(
@@ -721,6 +728,22 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ])),
                 SliverList(
                     delegate: SliverChildListDelegate([
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(
+                          16.0,
+                          8.0,
+                          16.0,
+                          0.0,
+                        ),
+                        child: _productDetails != null
+                            ? buildMainPriceRow()
+                            : ShimmerHelper().buildBasicShimmer(
+                          height: 30.0,
+                        ),
+                      ),
+                    ])), ///main price row
+                SliverList(
+                    delegate: SliverChildListDelegate([
                   Padding(
                       padding: const EdgeInsets.fromLTRB(
                         16.0,
@@ -740,13 +763,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                           : ShimmerHelper().buildBasicShimmer(
                               height: 30.0,
                             )),
-                ])),
+                ])), ///product name
                 SliverList(
                     delegate: SliverChildListDelegate([
                   Padding(
                     padding: const EdgeInsets.fromLTRB(
                       16.0,
-                      8.0,
+                      0.0,
                       16.0,
                       0.0,
                     ),
@@ -770,46 +793,31 @@ class _ProductDetailsState extends State<ProductDetails> {
                           ),
                   ),
                   Divider(
-                    height: 24.0,
+                    thickness: 2,
+                    height: 0.0,
                   ),
-                ])),
-                SliverList(
-                    delegate: SliverChildListDelegate([
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(
-                      16.0,
-                      8.0,
-                      16.0,
-                      0.0,
-                    ),
-                    child: _productDetails != null
-                        ? buildMainPriceRow()
-                        : ShimmerHelper().buildBasicShimmer(
-                            height: 30.0,
-                          ),
-                  ),
-                ])),
-                SliverList(
-                    delegate: SliverChildListDelegate([
-                  AddonConfig.club_point_addon_installed
-                      ? Padding(
-                          padding: const EdgeInsets.fromLTRB(
-                            16.0,
-                            8.0,
-                            16.0,
-                            0.0,
-                          ),
-                          child: _productDetails != null
-                              ? buildClubPointRow()
-                              : ShimmerHelper().buildBasicShimmer(
-                                  height: 30.0,
-                                ),
-                        )
-                      : Container(),
-                  Divider(
-                    height: 24.0,
-                  ),
-                ])),
+                ])), ///rating
+                // SliverList(
+                //     delegate: SliverChildListDelegate([
+                //   AddonConfig.club_point_addon_installed
+                //       ? Padding(
+                //           padding: const EdgeInsets.fromLTRB(
+                //             16.0,
+                //             8.0,
+                //             16.0,
+                //             0.0,
+                //           ),
+                //           child: _productDetails != null
+                //               ? buildClubPointRow()
+                //               : ShimmerHelper().buildBasicShimmer(
+                //                   height: 30.0,
+                //                 ),
+                //         )
+                //       : Container(),
+                //   Divider(
+                //     height: 24.0,
+                //   ),
+                // ])),
                 SliverList(
                     delegate: SliverChildListDelegate([
                   _productDetails != null
@@ -826,48 +834,122 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                     child: _productDetails != null
                         ? (_colorList.length > 0
-                            ? buildColorRow()
-                            : Container())
+                        ? buildColorRow()
+                        : Container())
                         : ShimmerHelper().buildBasicShimmer(
-                            height: 30.0,
-                          ),
+                      height: 30.0,
+                    ),
                   ),
+                ), ///Color
+                SliverToBoxAdapter(
+                  child: Divider(thickness: 2,),
                 ),
                 SliverList(
                     delegate: SliverChildListDelegate([
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(
-                      16.0,
-                      8.0,
-                      16.0,
-                      0.0,
-                    ),
-                    child: _productDetails != null
-                        ? buildQuantityRow()
-                        : ShimmerHelper().buildBasicShimmer(
-                            height: 30.0,
-                          ),
-                  ),
-                ])),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(
+                          16.0,
+                          8.0,
+                          16.0,
+                          8.0,
+                        ),
+                        child: _productDetails != null
+                            ? buildQuantityRow()
+                            : ShimmerHelper().buildBasicShimmer(
+                          height: 30.0,
+                        ),
+                      ),
+                      Divider(
+                        thickness: 2,
+                        height: 0.0,
+                      ),
+                    ])),
                 SliverList(
                     delegate: SliverChildListDelegate([
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(
+                          16.0,
+                          16.0,
+                          16.0,
+                          0.0,
+                        ),
+                        child: _productDetails != null
+                            ? buildTotalPriceRow()
+                            : ShimmerHelper().buildBasicShimmer(
+                          height: 30.0,
+                        ),
+                      ),
+                    ])), ///total price
+                SliverList(delegate: SliverChildListDelegate([
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(
-                      16.0,
-                      16.0,
-                      16.0,
-                      0.0,
-                    ),
-                    child: _productDetails != null
-                        ? buildTotalPriceRow()
-                        : ShimmerHelper().buildBasicShimmer(
-                            height: 30.0,
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Row(
+                      children: [
+                        FlatButton(
+                          minWidth: 50,
+                          height: 50,
+                          color: MyTheme.golden,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0.0),
                           ),
-                  ),
-                  Divider(
-                    height: 24.0,
-                  ),
-                ])),
+                          child: Text(
+                            AppLocalizations.of(context).product_details_screen_button_add_to_cart,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          onPressed: () {
+                            onPressAddToCart(context, _addedToCartSnackbar);
+                          },
+                        ),
+                        SizedBox(
+                          width: 1,
+                        ),
+                        FlatButton(
+                          minWidth: 50,
+                          height: 50,
+                          color: MyTheme.accent_color,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0.0),
+                          ),
+                          child: Text(
+                            AppLocalizations.of(context).product_details_screen_button_buy_now,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          onPressed: () {
+                            onPressBuyNow(context);
+                          },
+                        ),
+                        Spacer(),
+                        _isInWishList
+                            ? InkWell(
+                          onTap: () {
+                            onWishTap();
+                          },
+                          child: Icon(
+                            FontAwesome.heart,
+                            color: Color.fromRGBO(230, 46, 4, 1),
+                            size: 20,
+                          ),
+                        )
+                            : InkWell(
+                          onTap: () {
+                            onWishTap();
+                          },
+                          child: Icon(
+                            FontAwesome.heart_o,
+                            color: Color.fromRGBO(230, 46, 4, 1),
+                            size: 20,
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ])), ///add to cart button
                 SliverList(
                     delegate: SliverChildListDelegate([
                   Padding(
@@ -1284,16 +1366,17 @@ class _ProductDetailsState extends State<ProductDetails> {
     );
   }
 
-  Row buildTotalPriceRow() {
-    return Row(
+  Column buildTotalPriceRow() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: app_language_rtl.$ ? EdgeInsets.only(left: 8.0) : EdgeInsets.only(right: 8.0),
           child: Container(
-            width: 75,
+            width: 200,
             child: Text(
               AppLocalizations.of(context).product_details_screen_total_price,
-              style: TextStyle(color: Color.fromRGBO(153, 153, 153, 1)),
+              style: TextStyle(color: Color.fromRGBO(153, 153, 153, 1), fontSize: 20),
             ),
           ),
         ),
@@ -1301,7 +1384,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           _productDetails.currency_symbol + _totalPrice.toString(),
           style: TextStyle(
               color: MyTheme.accent_color,
-              fontSize: 18.0,
+              fontSize: 30.0,
               fontWeight: FontWeight.w600),
         )
       ],
@@ -1576,7 +1659,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ? Colors.purple
                       : Colors.white,
                   width: 1),
-              borderRadius: BorderRadius.circular(16.0),
+              borderRadius: BorderRadius.circular(5.0),
               color: Colors.white),
           child: Padding(
             padding: const EdgeInsets.all(2.0),
@@ -1586,7 +1669,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               decoration: BoxDecoration(
                   border: Border.all(
                       color: Color.fromRGBO(222, 222, 222, 1), width: 1),
-                  borderRadius: BorderRadius.circular(16.0),
+                  borderRadius: BorderRadius.circular(2.0),
                   color: ColorHelper.getColorFromColorCode(_colorList[index])),
               child: _selectedColorIndex == index
                   ? buildColorCheckerContainer()
@@ -1640,8 +1723,9 @@ class _ProductDetailsState extends State<ProductDetails> {
     );
   }
 
-  Row buildMainPriceRow() {
-    return Row(
+  Column buildMainPriceRow() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: app_language_rtl.$ ? EdgeInsets.only(left: 8.0) : EdgeInsets.only(right: 8.0),
@@ -1678,40 +1762,135 @@ class _ProductDetailsState extends State<ProductDetails> {
   AppBar buildAppBar(double statusBarHeight, BuildContext context) {
     return AppBar(
       backgroundColor: Colors.white,
-      leading: Builder(
-        builder: (context) => IconButton(
-          icon: Icon(Icons.arrow_back, color: MyTheme.dark_grey),
-          onPressed: () => Navigator.of(context).pop(),
+      leading: GestureDetector(
+        onTap: () {
+          _scaffoldKey.currentState.openDrawer();
+        },
+        child: widget.show_back_button
+            ? Builder(
+          builder: (context) => IconButton(
+              icon: Icon(Icons.arrow_back, color: MyTheme.dark_grey),
+              onPressed: () {
+                if (!widget.go_back) {
+                  return;
+                }
+                return Navigator.of(context).pop();
+              }),
+        )
+            : Builder(
+          builder: (context) => Padding(
+            padding: const EdgeInsets.symmetric(
+                vertical: 18.0, horizontal: 0.0),
+            child: Container(
+              child: Image.asset(
+                'assets/hamburger.png',
+                height: 16,
+                //color: MyTheme.dark_grey,
+                color: MyTheme.dark_grey,
+              ),
+            ),
+          ),
         ),
       ),
       title: Container(
         height: kToolbarHeight +
             statusBarHeight -
-            (MediaQuery.of(context).viewPadding.top > 40 ? 32.0 : 16.0),
+            (MediaQuery.of(context).viewPadding.top > 20 ? 10.0 : 10.0),
         //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
-        child: Container(
-            width: 300,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 22.0),
-              child: Text(
-                _appbarPriceString,
-                style: TextStyle(fontSize: 16, color: MyTheme.font_grey),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              height: 60,
+              child: Padding(
+                padding: app_language_rtl.$
+                    ? const EdgeInsets.only(top: 14.0, bottom: 14, left: 12)
+                    : const EdgeInsets.only(top: 14.0, bottom: 14, right: 12),
+                child: Image.asset('assets/ebhubon.png'),
               ),
-            )),
+            ),
+
+            Container(
+              child: Padding(
+                  padding: app_language_rtl.$
+                      ? const EdgeInsets.only(top: 14.0, bottom: 14, left: 12)
+                      : const EdgeInsets.only(top: 14.0, bottom: 14, right: 12),
+                  // when notification bell will be shown , the right padding will cease to exist.
+                  child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                              return Filter();
+                            }));
+                      },
+                      child: buildHomeSearchBox(context))),
+            ),
+          ],
+        ),
       ),
       elevation: 0.0,
       titleSpacing: 0,
       actions: <Widget>[
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
-          child: IconButton(
-            icon: Icon(Icons.share_outlined, color: MyTheme.dark_grey),
-            onPressed: () {
-              onPressShare(context);
-            },
+        InkWell(
+          onTap: () {
+            ToastComponent.showDialog(
+                AppLocalizations.of(context).common_coming_soon, context,
+                gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+          },
+          child: Visibility(
+            visible: false,
+            child: Padding(
+              padding:
+              const EdgeInsets.symmetric(vertical: 18.0, horizontal: 12.0),
+              child: Image.asset(
+                'assets/bell.png',
+                height: 16,
+                color: MyTheme.dark_grey,
+              ),
+            ),
           ),
         ),
       ],
+    );
+  }
+  buildHomeSearchBox(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return Filter();
+        }));
+      },
+      autofocus: false,
+      // decoration: InputDecoration(
+      //     hintText: AppLocalizations.of(context).home_screen_search,
+      //     hintStyle: TextStyle(fontSize: 12.0, color: MyTheme.textfield_grey),
+      //     enabledBorder: OutlineInputBorder(
+      //       borderSide: BorderSide(color: MyTheme.textfield_grey, width: 0.5),
+      //       borderRadius: const BorderRadius.all(
+      //         const Radius.circular(16.0),
+      //       ),
+      //     ),
+      //     focusedBorder: OutlineInputBorder(
+      //       borderSide: BorderSide(color: MyTheme.textfield_grey, width: 1.0),
+      //       borderRadius: const BorderRadius.all(
+      //         const Radius.circular(16.0),
+      //       ),
+      //     ),
+      //     prefixIcon: Padding(
+      //       padding: const EdgeInsets.all(8.0),
+      //       child: Icon(
+      //         Icons.search,
+      //         color: MyTheme.textfield_grey,
+      //         size: 20,
+      //       ),
+      //     ),
+      //
+      //     icontentPadding: EdgeInsets.all(0.0)),
+      icon: Icon(
+        Icons.search,
+        color: MyTheme.textfield_grey,
+        size: 20,
+      ),
     );
   }
 
@@ -1798,28 +1977,28 @@ class _ProductDetailsState extends State<ProductDetails> {
                 color: Color.fromRGBO(152, 152, 153, 1), fontSize: 14),
           ),
         ),
-        Spacer(),
-        _isInWishList
-            ? InkWell(
-                onTap: () {
-                  onWishTap();
-                },
-                child: Icon(
-                  FontAwesome.heart,
-                  color: Color.fromRGBO(230, 46, 4, 1),
-                  size: 20,
-                ),
-              )
-            : InkWell(
-                onTap: () {
-                  onWishTap();
-                },
-                child: Icon(
-                  FontAwesome.heart_o,
-                  color: Color.fromRGBO(230, 46, 4, 1),
-                  size: 20,
-                ),
-              )
+        // Spacer(),
+        // _isInWishList
+        //     ? InkWell(
+        //         onTap: () {
+        //           onWishTap();
+        //         },
+        //         child: Icon(
+        //           FontAwesome.heart,
+        //           color: Color.fromRGBO(230, 46, 4, 1),
+        //           size: 20,
+        //         ),
+        //       )
+        //     : InkWell(
+        //         onTap: () {
+        //           onWishTap();
+        //         },
+        //         child: Icon(
+        //           FontAwesome.heart_o,
+        //           color: Color.fromRGBO(230, 46, 4, 1),
+        //           size: 20,
+        //         ),
+        //       )
       ],
     );
   }
@@ -2086,8 +2265,16 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   buildProductImageSection() {
     if (_productImageList.length == 0) {
-      return Row(
+      return Column(
         children: [
+          Flexible(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: ShimmerHelper().buildBasicShimmer(
+                height: 190.0,
+              ),
+            ),
+          ),
           Container(
             width: 40,
             child: Column(
@@ -2115,23 +2302,35 @@ class _ProductDetailsState extends State<ProductDetails> {
               ],
             ),
           ),
-          Flexible(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: ShimmerHelper().buildBasicShimmer(
-                height: 190.0,
-              ),
-            ),
-          ),
+
         ],
       );
     } else {
-      return Row(
+      return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          InkWell(
+            onTap: () {
+              openPhotoDialog(context,
+                  AppConfig.BASE_PATH + _productImageList[_currentImage]);
+            },
+            child: Container(
+              // height: 250,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10)
+              ),
+              width: MediaQuery.of(context).size.width,
+              child: Container(
+                  child: FadeInImage.assetNetwork(
+                    placeholder: 'assets/placeholder_rectangle.png',
+                    image: AppConfig.BASE_PATH + _productImageList[_currentImage],
+                    fit: BoxFit.scaleDown,
+                  )),
+            ),
+          ),
           SizedBox(
-            height: 250,
-            width: 64,
+            height: 50,
+            width: MediaQuery.of(context).size.width,
             child: Scrollbar(
               controller: _imageScrollController,
               isAlwaysShown: false,
@@ -2140,7 +2339,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 padding: app_language_rtl.$ ? EdgeInsets.only(left: 8.0) : EdgeInsets.only(right: 8.0),
                 child: ListView.builder(
                     itemCount: _productImageList.length,
-                    scrollDirection: Axis.vertical,
+                    scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       int itemIndex = index;
@@ -2156,7 +2355,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           margin: EdgeInsets.symmetric(
                               vertical: 4.0, horizontal: 2.0),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(5),
                             border: Border.all(
                                 color: _currentImage == itemIndex
                                     ? MyTheme.accent_color
@@ -2165,7 +2364,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             //shape: BoxShape.rectangle,
                           ),
                           child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(5),
                               child:
                                   /*Image.asset(
                                         singleProduct.product_images[index])*/
@@ -2179,22 +2378,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                       );
                     }),
               ),
-            ),
-          ),
-          InkWell(
-            onTap: () {
-              openPhotoDialog(context,
-                  AppConfig.BASE_PATH + _productImageList[_currentImage]);
-            },
-            child: Container(
-              height: 250,
-              width: MediaQuery.of(context).size.width - 96,
-              child: Container(
-                  child: FadeInImage.assetNetwork(
-                placeholder: 'assets/placeholder_rectangle.png',
-                image: AppConfig.BASE_PATH + _productImageList[_currentImage],
-                fit: BoxFit.scaleDown,
-              )),
             ),
           ),
         ],

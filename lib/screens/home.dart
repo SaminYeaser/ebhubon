@@ -45,15 +45,28 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   int _current_slider = 0;
+  int _currentSliderBanner = 0;
   ScrollController _featuredProductScrollController;
   ScrollController _mainScrollController = ScrollController();
   final carousleController = CarouselController();
+  final CarouselController _bannerCarouselController = CarouselController();
   var _carouselImageList = [];
   var _featuredCategoryList = [];
   var _featuredProductList = [];
+  var _topCategoryList = [];
   var _allCategoryList = [];
+  final List<String> _bannerImageList = [
+    'assets/banner1.jpg',
+    'assets/banner2.jpg'
+  ];
+  final List<String> _secondBannerList = [
+    'assets/banner3.png',
+    'assets/banner4.png',
+    'assets/banner5.png'
+  ];
   bool _isProductInitial = true;
   bool _isCategoryInitial = true;
+  bool _isTopCategoryInitial = true;
   bool _isCarouselInitial = true;
   int _totalProductData = 0;
   int _productPage = 1;
@@ -85,6 +98,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     fetchFeaturedCategories();
     fetchFeaturedProducts();
     fetchAllCategory();
+    fetchTopCategories();
   }
 
   void previous() {
@@ -115,6 +129,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     _featuredCategoryList.addAll(categoryResponse.categories);
     _isCategoryInitial = false;
     setState(() {});
+  }
+  fetchTopCategories() async{
+    var topCategoryResponse = await CategoryRepository().getTopCategories();
+    _topCategoryList.addAll(topCategoryResponse.categories);
+    _isTopCategoryInitial = false;
+    setState(() {
+
+    });
   }
 
   fetchFeaturedProducts() async {
@@ -164,7 +186,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final double statusBarHeight = MediaQuery.of(context).padding.top;
+    final double statusBarHeight = 10;
     //print(MediaQuery.of(context).viewPadding.top);
 
     return WillPopScope(
@@ -195,9 +217,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         delegate: SliverChildListDelegate([
                           Padding(
                             padding: const EdgeInsets.fromLTRB(
-                              16.0,
-                              16.0,
-                              16.0,
+                              5.0,
+                              5.0,
+                              5.0,
                               0.0,
                             ),
                             child: Column(
@@ -207,7 +229,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                   color: Colors.grey,
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(top: 10, bottom: 10),
+                                  padding: EdgeInsets.only(bottom: 10, left: 30, right: 30),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
@@ -254,32 +276,188 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                     ],
                                   ),
                                 ),
-                                Text(
-                                  AppLocalizations.of(context)
-                                      .home_screen_featured_categories,
-                                  style: TextStyle(
-                                    fontSize: 16,
+
+                                CarouselSlider(
+                                  options: CarouselOptions(
+                                    height: 100,
+                                    viewportFraction: 1.0,
+                                    enlargeCenterPage: false,
+                                    autoPlay: true,
+                                    onPageChanged: (index, reason){
+                                      setState(() {
+                                        _currentSliderBanner = index;
+                                      });
+                                    }
+                                    // autoPlay: false,
                                   ),
+                                  items: _bannerImageList.map((e) => Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Image.asset(e,fit: BoxFit.cover),
+                                  )).toList(),
                                 ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: _bannerImageList.asMap().entries.map((entry) {
+                                    return GestureDetector(
+                                      onTap: () => _bannerCarouselController.animateToPage(entry.key),
+                                      child: Container(
+                                        width: 5.0,
+                                        height: 5.0,
+                                        margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: (Theme.of(context).brightness == Brightness.dark
+                                                ? Colors.white
+                                                : Colors.black)
+                                                .withOpacity(_currentSliderBanner == entry.key ? 0.9 : 0.4)),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                              return CategoryProducts(
+                                                category_id: 3,
+                                                category_name: 'property',
+                                              );
+                                            }));
+                                          },
+                                        child: Image.asset('assets/property.jpg'),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTap: (){
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                            return CategoryProducts(
+                                              category_id: 6,
+                                              category_name: 'Grocery & Household',
+                                            );
+                                          }));
+                                        },
+                                          child: Image.asset('assets/grocery.jpg')),
+                                    )
+                                  ],
+                                ),
+
                               ],
                             ),
                           ),
                         ]),
                       ),
                       SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(
-                            16.0,
-                            16.0,
-                            0.0,
-                            0.0,
-                          ),
-                          child: SizedBox(
-                            height: 154,
-                            child: buildHomeFeaturedCategories(context),
-                          ),
+                        child: SizedBox(
+                          height: 154,
+                          child: buildHomeFeaturedCategories(context),
                         ),
                       ),
+                      SliverList(delegate: SliverChildListDelegate([
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                          child: CarouselSlider(
+                            options: CarouselOptions(
+                                height: 100,
+                                viewportFraction: 1.0,
+                                enlargeCenterPage: false,
+                                autoPlay: true,
+                                onPageChanged: (index, reason){
+                                  // setState(() {
+                                  //   _currentSliderBanner = index;
+                                  // });
+                                }
+                              // autoPlay: false,
+                            ),
+                            items: _secondBannerList.map((e) => Container(
+                              width: MediaQuery.of(context).size.width,
+                              child: Image.asset(e,fit: BoxFit.cover),
+                            )).toList(),
+                          ),
+                        ),
+                      ])),
+                      // SliverList(delegate: SliverChildListDelegate([
+                      //     Card(
+                      //       elevation: 5,
+                      //       child: Padding(
+                      //         padding: const EdgeInsets.fromLTRB(
+                      //           16.0,
+                      //           16.0,
+                      //           16.0,
+                      //           16.0,
+                      //         ),
+                      //         child: Column(
+                      //           children: [
+                      //             Row(
+                      //               mainAxisAlignment:
+                      //               MainAxisAlignment.spaceBetween,
+                      //               children: [
+                      //                 Text(
+                      //                   'Brand',
+                      //                   style: TextStyle(fontSize: 16),
+                      //                 ),
+                      //                 ElevatedButton(
+                      //                   onPressed: () {
+                      //                     Navigator.push(
+                      //                         context,
+                      //                         MaterialPageRoute(
+                      //                             builder: (context) =>
+                      //                                 CategoryList()));
+                      //                   },
+                      //                   style: ElevatedButton.styleFrom(
+                      //                       minimumSize: Size(80, 35),
+                      //                       primary: Colors.red,
+                      //                       shape: RoundedRectangleBorder(
+                      //                           borderRadius:
+                      //                           BorderRadius.circular(30))),
+                      //                   child: Text('More'),
+                      //                 )
+                      //               ],
+                      //             ),
+                      //             Row(
+                      //               children: [
+                      //                 Expanded(
+                      //                   flex: 1,
+                      //                   child: Divider(
+                      //                     color: Colors.red,
+                      //                     thickness: 4,
+                      //                   ),
+                      //                 ),
+                      //                 Expanded(
+                      //                   flex: 5,
+                      //                   child: Divider(
+                      //                     color: Colors.grey,
+                      //                     thickness: 2,
+                      //                   ),
+                      //                 ),
+                      //               ],
+                      //             ),
+                      //             CarouselSlider(
+                      //               options: CarouselOptions(
+                      //                   height: 100,
+                      //                   viewportFraction: 1.0,
+                      //                   enlargeCenterPage: false,
+                      //                   autoPlay: true,
+                      //                   onPageChanged: (index, reason){
+                      //                     // setState(() {
+                      //                     //   _currentSliderBanner = index;
+                      //                     // });
+                      //                   }
+                      //                 // autoPlay: false,
+                      //               ),
+                      //               items: _secondBannerList.map((e) => Container(
+                      //                 width: MediaQuery.of(context).size.width,
+                      //                 child: Image.asset(e,fit: BoxFit.cover),
+                      //               )).toList(),
+                      //             )
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     )
+                      // ]
+                      // )),
                       SliverList(
                         delegate: SliverChildListDelegate([
                           Card(
@@ -339,7 +517,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                     ],
                                   ),
                                   SizedBox(
-                                    height: 180,
+                                    height: 220,
                                     width: MediaQuery.of(context).size.width,
                                     child: _allCategoryList.length == 0
                                         ? SingleChildScrollView(
@@ -758,7 +936,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           itemExtent: 120,
           itemBuilder: (context, index) {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 3),
+              padding: const EdgeInsets.symmetric(horizontal: 0),
               child: GestureDetector(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -772,7 +950,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                   shape: RoundedRectangleBorder(
                     side: new BorderSide(color: MyTheme.light_grey, width: 1.0),
-                    borderRadius: BorderRadius.circular(16.0),
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
                   elevation: 0.0,
                   child: Column(
@@ -783,7 +961,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           height: 100,
                           child: ClipRRect(
                               borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(16),
+                                  top: Radius.circular(5),
                                   bottom: Radius.zero),
                               child: FadeInImage.assetNetwork(
                                 placeholder: 'assets/placeholder.png',
@@ -1138,7 +1316,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       title: Container(
         height: kToolbarHeight +
             statusBarHeight -
-            (MediaQuery.of(context).viewPadding.top > 40 ? 16.0 : 16.0),
+            (MediaQuery.of(context).viewPadding.top > 20 ? 10.0 : 10.0),
         //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
