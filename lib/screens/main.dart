@@ -4,6 +4,7 @@ import 'package:active_ecommerce_flutter/screens/category_list.dart';
 import 'package:active_ecommerce_flutter/screens/home.dart';
 import 'package:active_ecommerce_flutter/screens/profile.dart';
 import 'package:active_ecommerce_flutter/screens/filter.dart';
+import 'package:active_ecommerce_flutter/screens/under_maintainence_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
@@ -36,8 +37,8 @@ class _MainState extends State<Main> {
     CategoryList(
       is_base_category: true,
     ),
-    Home(),
     Cart(has_bottomnav: true),
+    UnderMaintainencePage(),
     Profile(),
   ];
 
@@ -148,7 +149,7 @@ class _MainState extends State<Main> {
                   BottomNavigationBarItem(
                       icon: Image.asset(
                         "assets/cart.png",
-                        color: _currentIndex == 3
+                        color: _currentIndex == 2
                             ? Theme.of(context).accentColor
                             : Color.fromRGBO(153, 153, 153, 1),
                         height: 20,
@@ -164,11 +165,11 @@ class _MainState extends State<Main> {
                   ),
                   BottomNavigationBarItem(
                       icon: Icon(Icons.notifications,
-                      color: _currentIndex == 5
-                        ? Theme.of(context).accentColor
-                        : Color.fromRGBO(153, 153, 153, 1),
+                        color: _currentIndex == 5
+                            ? Theme.of(context).accentColor
+                            : Color.fromRGBO(153, 153, 153, 1),
                       ),
-                    // label: '${AppLocalizations.of(context).main_screen_bottom_navigation_pr}'
+                    // label: '${AppLocalizations.of(context).main_screen_bottom_navigation_notification}',
                     label: 'Notification'
                   ),
                   BottomNavigationBarItem(

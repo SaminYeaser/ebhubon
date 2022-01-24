@@ -5,6 +5,7 @@ import 'package:active_ecommerce_flutter/screens/todays_deal_products.dart';
 import 'package:active_ecommerce_flutter/screens/top_selling_products.dart';
 import 'package:active_ecommerce_flutter/screens/category_products.dart';
 import 'package:active_ecommerce_flutter/screens/category_list.dart';
+import 'package:active_ecommerce_flutter/screens/under_maintainence_page.dart';
 import 'package:active_ecommerce_flutter/ui_sections/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -20,6 +21,8 @@ import 'package:active_ecommerce_flutter/ui_elements/product_card.dart';
 import 'package:active_ecommerce_flutter/helpers/shimmer_helper.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'main.dart';
 
 class Home extends StatefulWidget {
   Home({Key key, this.title, this.show_back_button = false, go_back = true})
@@ -71,6 +74,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   int _totalProductData = 0;
   int _productPage = 1;
   bool _showProductLoadingContainer = false;
+
+
 
   @override
   void initState() {
@@ -234,43 +239,63 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Container(
-                                        child: Row(
-                                          children: [
-                                            Icon(Icons.home,color: Colors.red,),
-                                            Text('Home',style: TextStyle(
-                                              fontSize: 16
-                                            ),)
-                                          ],
+                                        child: InkWell(
+                                          onTap: (){
+                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>Main()));
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Icon(Icons.home,color: Colors.red,),
+                                              Text('Home',style: TextStyle(
+                                                fontSize: 16
+                                              ),)
+                                            ],
+                                          ),
                                         ),
                                       ),
                                       Container(
-                                        child: Row(
-                                          children: [
-                                            Icon(Icons.campaign,color: Colors.red,),
-                                            Text('Campaign',style: TextStyle(
-                                                fontSize: 16
-                                            ),)
-                                          ],
+                                        child: InkWell(
+                                          onTap: (){
+                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Icon(Icons.campaign,color: Colors.red,),
+                                              Text('Campaign',style: TextStyle(
+                                                  fontSize: 16
+                                              ),)
+                                            ],
+                                          ),
                                         ),
                                       ),
                                       Container(
-                                        child: Row(
-                                          children: [
-                                            Icon(Icons.local_offer,color: Colors.red,),
-                                            Text('Offers',style: TextStyle(
-                                                fontSize: 16
-                                            ),)
-                                          ],
+                                        child: InkWell(
+                                          onTap: (){
+                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Icon(Icons.local_offer,color: Colors.red,),
+                                              Text('Offers',style: TextStyle(
+                                                  fontSize: 16
+                                              ),)
+                                            ],
+                                          ),
                                         ),
                                       ),
                                       Container(
-                                        child: Row(
-                                          children: [
-                                            Icon(Icons.video_call,color: Colors.red,),
-                                            Text('Live',style: TextStyle(
-                                                fontSize: 16
-                                            ),)
-                                          ],
+                                        child: InkWell(
+                                          onTap: (){
+                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Icon(Icons.video_call,color: Colors.red,),
+                                              Text('Live',style: TextStyle(
+                                                  fontSize: 16
+                                              ),)
+                                            ],
+                                          ),
                                         ),
                                       )
                                     ],
