@@ -1,3 +1,4 @@
+import 'package:active_ecommerce_flutter/screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:active_ecommerce_flutter/ui_sections/drawer.dart';
@@ -137,13 +138,10 @@ class _ProfileState extends State<Profile> {
 
   buildBody(context) {
     if (is_logged_in.$ == false) {
-      return Container(
-          height: 100,
-          child: Center(
-              child: Text(
-                AppLocalizations.of(context).profile_screen_please_log_in,
-            style: TextStyle(color: MyTheme.font_grey),
-          )));
+      return Scaffold(
+        body: Login(),
+      );
+
     } else {
       return RefreshIndicator(
         color: MyTheme.accent_color,

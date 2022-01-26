@@ -2221,47 +2221,103 @@ class _ProductDetailsState extends State<ProductDetails> {
             }
           }));
 
-  openPhotoDialog(BuildContext context, path) => showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Dialog(
+  openPhotoDialog(context, path){
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: false,
+      transitionDuration: Duration(milliseconds: 1000),
+      transitionBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: ScaleTransition(
+            scale: animation,
+            child: child,
+          ),
+        );
+      },
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return Scaffold(
+          body: SafeArea(
             child: Container(
                 child: Stack(
-              children: [
-                PhotoView(
-                  enableRotation: true,
-                  heroAttributes: const PhotoViewHeroAttributes(tag: "someTag"),
-                  imageProvider: NetworkImage(path),
-                ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Container(
-                    decoration: ShapeDecoration(
-                      color: MyTheme.medium_grey_50,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(25),
-                          bottomRight: Radius.circular(25),
-                          topRight: Radius.circular(25),
-                          topLeft: Radius.circular(25),
+                  children: [
+                    PhotoView(
+                      enableRotation: true,
+                      heroAttributes: const PhotoViewHeroAttributes(tag: "someTag"),
+                      imageProvider: NetworkImage(path),
+                    ),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: Container(
+                        decoration: ShapeDecoration(
+                          color: MyTheme.medium_grey_50,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(25),
+                              bottomRight: Radius.circular(25),
+                              topRight: Radius.circular(25),
+                              topLeft: Radius.circular(25),
+                            ),
+                          ),
+                        ),
+                        width: 40,
+                        height: 40,
+                        child: IconButton(
+                          icon: Icon(Icons.clear, color: MyTheme.white),
+                          onPressed: () {
+                            Navigator.of(context, rootNavigator: true).pop();
+                          },
                         ),
                       ),
                     ),
-                    width: 40,
-                    height: 40,
-                    child: IconButton(
-                      icon: Icon(Icons.clear, color: MyTheme.white),
-                      onPressed: () {
-                        Navigator.of(context, rootNavigator: true).pop();
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            )),
-          );
-        },
-      );
+                  ],
+                )),
+          ),
+        );
+      },
+    );
+  }
+  // openPhotoDialog(BuildContext context, path) => showDialog(
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         return Dialog(
+  //           child: Container(
+  //               child: Stack(
+  //             children: [
+  //               PhotoView(
+  //                 enableRotation: true,
+  //                 heroAttributes: const PhotoViewHeroAttributes(tag: "someTag"),
+  //                 imageProvider: NetworkImage(path),
+  //               ),
+  //               Align(
+  //                 alignment: Alignment.topRight,
+  //                 child: Container(
+  //                   decoration: ShapeDecoration(
+  //                     color: MyTheme.medium_grey_50,
+  //                     shape: RoundedRectangleBorder(
+  //                       borderRadius: BorderRadius.only(
+  //                         bottomLeft: Radius.circular(25),
+  //                         bottomRight: Radius.circular(25),
+  //                         topRight: Radius.circular(25),
+  //                         topLeft: Radius.circular(25),
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   width: 40,
+  //                   height: 40,
+  //                   child: IconButton(
+  //                     icon: Icon(Icons.clear, color: MyTheme.white),
+  //                     onPressed: () {
+  //                       Navigator.of(context, rootNavigator: true).pop();
+  //                     },
+  //                   ),
+  //                 ),
+  //               ),
+  //             ],
+  //           )),
+  //         );
+  //       },
+  //     );
 
   buildProductImageSection() {
     if (_productImageList.length == 0) {

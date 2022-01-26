@@ -235,7 +235,7 @@ class _LoginState extends State<Login> {
                       width: 75,
                       height: 75,
                       child:
-                          Image.asset('assets/login_registration_form_logo.png'),
+                          Image.asset('assets/ebhubon.png'),
                     ),
                   ),
                   Padding(

@@ -191,7 +191,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final double statusBarHeight = 10;
+    final double statusBarHeight = 1;
     //print(MediaQuery.of(context).viewPadding.top);
 
     return WillPopScope(
@@ -1307,6 +1307,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   AppBar buildAppBar(double statusBarHeight, BuildContext context) {
     return AppBar(
+      toolbarHeight: 20,
       backgroundColor: Colors.white,
       leading: GestureDetector(
         onTap: () {
@@ -1326,7 +1327,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             : Builder(
                 builder: (context) => Padding(
                   padding: const EdgeInsets.symmetric(
-                      vertical: 18.0, horizontal: 0.0),
+                      vertical: 0.0, horizontal: 0.0),
                   child: Container(
                     child: Image.asset(
                       'assets/hamburger.png',
@@ -1354,12 +1355,12 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 child: Image.asset('assets/ebhubon.png'),
               ),
             ),
-            
+
             Container(
               child: Padding(
                   padding: app_language_rtl.$
-                      ? const EdgeInsets.only(top: 14.0, bottom: 14, left: 12)
-                      : const EdgeInsets.only(top: 14.0, bottom: 14, right: 12),
+                      ? const EdgeInsets.only(top: 8.0, bottom: 20, left: 12)
+                      : const EdgeInsets.only(top: 8.0, bottom: 20, right: 12),
                   // when notification bell will be shown , the right padding will cease to exist.
                   child: GestureDetector(
                       onTap: () {
