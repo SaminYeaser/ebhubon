@@ -12,7 +12,7 @@ class AppConfig {
   static const bool HTTPS = true;
 
   //configure this
-  static const DOMAIN_PATH = "ebhubon.net"; //localhost
+  static const DOMAIN_PATH = "ebhubon.com"; //localhost
   //static const DOMAIN_PATH = "demo.activeitzone.com/ecommerce_flutter_demo"; //inside a folder
   //static const DOMAIN_PATH = "mydomain.com"; // directly inside the public folder
 
