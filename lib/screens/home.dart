@@ -191,7 +191,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final double statusBarHeight = 1;
+    final double statusBarHeight = 10;
     //print(MediaQuery.of(context).viewPadding.top);
 
     return WillPopScope(
@@ -223,7 +223,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(
                               5.0,
-                              5.0,
+                              0.0,
                               5.0,
                               0.0,
                             ),
@@ -233,74 +233,74 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                 Divider(
                                   color: Colors.grey,
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.only(bottom: 10, left: 30, right: 30),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Container(
-                                        child: InkWell(
-                                          onTap: (){
-                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>Main()));
-                                          },
-                                          child: Row(
-                                            children: [
-                                              Icon(Icons.home,color: Colors.red,),
-                                              Text('Home',style: TextStyle(
-                                                fontSize: 16
-                                              ),)
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        child: InkWell(
-                                          onTap: (){
-                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
-                                          },
-                                          child: Row(
-                                            children: [
-                                              Icon(Icons.campaign,color: Colors.red,),
-                                              Text('Campaign',style: TextStyle(
-                                                  fontSize: 16
-                                              ),)
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        child: InkWell(
-                                          onTap: (){
-                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
-                                          },
-                                          child: Row(
-                                            children: [
-                                              Icon(Icons.local_offer,color: Colors.red,),
-                                              Text('Offers',style: TextStyle(
-                                                  fontSize: 16
-                                              ),)
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        child: InkWell(
-                                          onTap: (){
-                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
-                                          },
-                                          child: Row(
-                                            children: [
-                                              Icon(Icons.video_call,color: Colors.red,),
-                                              Text('Live',style: TextStyle(
-                                                  fontSize: 16
-                                              ),)
-                                            ],
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
+                                // Padding(
+                                //   padding: EdgeInsets.only(bottom: 10, left: 30, right: 30),
+                                //   child: Row(
+                                //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                //     children: [
+                                //       Container(
+                                //         child: InkWell(
+                                //           onTap: (){
+                                //             Navigator.push(context, MaterialPageRoute(builder: (context)=>Main()));
+                                //           },
+                                //           child: Row(
+                                //             children: [
+                                //               Icon(Icons.home,color: Colors.red,),
+                                //               Text('Home',style: TextStyle(
+                                //                 fontSize: 16
+                                //               ),)
+                                //             ],
+                                //           ),
+                                //         ),
+                                //       ),
+                                //       Container(
+                                //         child: InkWell(
+                                //           onTap: (){
+                                //             Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+                                //           },
+                                //           child: Row(
+                                //             children: [
+                                //               Icon(Icons.campaign,color: Colors.red,),
+                                //               Text('Campaign',style: TextStyle(
+                                //                   fontSize: 16
+                                //               ),)
+                                //             ],
+                                //           ),
+                                //         ),
+                                //       ),
+                                //       Container(
+                                //         child: InkWell(
+                                //           onTap: (){
+                                //             Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+                                //           },
+                                //           child: Row(
+                                //             children: [
+                                //               Icon(Icons.local_offer,color: Colors.red,),
+                                //               Text('Offers',style: TextStyle(
+                                //                   fontSize: 16
+                                //               ),)
+                                //             ],
+                                //           ),
+                                //         ),
+                                //       ),
+                                //       Container(
+                                //         child: InkWell(
+                                //           onTap: (){
+                                //             Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+                                //           },
+                                //           child: Row(
+                                //             children: [
+                                //               Icon(Icons.video_call,color: Colors.red,),
+                                //               Text('Live',style: TextStyle(
+                                //                   fontSize: 16
+                                //               ),)
+                                //             ],
+                                //           ),
+                                //         ),
+                                //       )
+                                //     ],
+                                //   ),
+                                // ),
 
                                 CarouselSlider(
                                   options: CarouselOptions(
@@ -1307,7 +1307,80 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   AppBar buildAppBar(double statusBarHeight, BuildContext context) {
     return AppBar(
-      toolbarHeight: 20,
+      // flexibleSpace: FlexibleSpace(),
+      toolbarHeight: 30,
+      bottom: PreferredSize(
+        preferredSize: Size.fromHeight(35),
+        child: Padding(
+          padding: EdgeInsets.only(bottom: 3, left: 30, right: 30),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                child: InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Main()));
+                  },
+                  child: Row(
+                    children: [
+                      Icon(Icons.home,color: Colors.red,),
+                      Text('Home',style: TextStyle(
+                          fontSize: 16
+                      ),)
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                child: InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+                  },
+                  child: Row(
+                    children: [
+                      Icon(Icons.campaign,color: Colors.red,),
+                      Text('Campaign',style: TextStyle(
+                          fontSize: 16
+                      ),)
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                child: InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+                  },
+                  child: Row(
+                    children: [
+                      Icon(Icons.local_offer,color: Colors.red,),
+                      Text('Offers',style: TextStyle(
+                          fontSize: 16
+                      ),)
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                child: InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+                  },
+                  child: Row(
+                    children: [
+                      Icon(Icons.video_call,color: Colors.red,),
+                      Text('Live',style: TextStyle(
+                          fontSize: 16
+                      ),)
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+
+      ),
       backgroundColor: Colors.white,
       leading: GestureDetector(
         onTap: () {
@@ -1327,7 +1400,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             : Builder(
                 builder: (context) => Padding(
                   padding: const EdgeInsets.symmetric(
-                      vertical: 0.0, horizontal: 0.0),
+                      vertical: 5.0, horizontal: 5.0),
                   child: Container(
                     child: Image.asset(
                       'assets/hamburger.png',
@@ -1359,8 +1432,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             Container(
               child: Padding(
                   padding: app_language_rtl.$
-                      ? const EdgeInsets.only(top: 8.0, bottom: 20, left: 12)
-                      : const EdgeInsets.only(top: 8.0, bottom: 20, right: 12),
+                      ? const EdgeInsets.only(top: 16.0, bottom: 20, left: 12)
+                      : const EdgeInsets.only(top: 16.0, bottom: 20, right: 12),
                   // when notification bell will be shown , the right padding will cease to exist.
                   child: GestureDetector(
                       onTap: () {
