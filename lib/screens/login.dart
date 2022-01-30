@@ -633,15 +633,17 @@ class _LoginState extends State<Login> {
       ),
       backgroundColor: Colors.white,
       leading: widget.show_back_button
-          ? Builder(
-        builder: (context) => IconButton(
-            icon: Icon(Icons.arrow_back, color: MyTheme.dark_grey),
-            onPressed: () {
-              // if (!widget.go_back) {
-              //   return;
-              // }
-              return Navigator.of(context).pop();
-            }),
+          ?
+      Builder(
+        builder: (context) => Container()
+            // IconButton(
+            // icon: Icon(Icons.arrow_back, color: MyTheme.dark_grey),
+            // onPressed: () {
+            //   // if (!widget.go_back) {
+            //   //   return;
+            //   // }
+            //   return Navigator.of(context).pop();
+            // }),
       )
           : Builder(
         builder: (context) => Padding(

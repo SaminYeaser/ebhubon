@@ -547,36 +547,36 @@ class _CartState extends State<Cart> {
 
       ),
       backgroundColor: Colors.white,
-      leading: GestureDetector(
-        onTap: () {
-          _scaffoldKey.currentState.openDrawer();
-        },
-        child: widget.show_back_button
-            ? Builder(
-          builder: (context) => IconButton(
-              icon: Icon(Icons.arrow_back, color: MyTheme.dark_grey),
-              onPressed: () {
-                // if (!widget.go_back) {
-                //   return;
-                // }
-                return Navigator.of(context).pop();
-              }),
-        )
-            : Builder(
-          builder: (context) => Padding(
-            padding: const EdgeInsets.symmetric(
-                vertical: 5.0, horizontal: 5.0),
-            child: Container(
-              child: Image.asset(
-                'assets/hamburger.png',
-                height: 16,
-                //color: MyTheme.dark_grey,
-                color: MyTheme.dark_grey,
-              ),
-            ),
-          ),
-        ),
-      ),
+      // leading: GestureDetector(
+      //   onTap: () {
+      //     _scaffoldKey.currentState.openDrawer();
+      //   },
+      //   child: widget.show_back_button
+      //       ? Builder(
+      //     builder: (context) => IconButton(
+      //         icon: Icon(Icons.arrow_back, color: MyTheme.dark_grey),
+      //         onPressed: () {
+      //           // if (!widget.go_back) {
+      //           //   return;
+      //           // }
+      //           return Navigator.of(context).pop();
+      //         }),
+      //   )
+      //       : Builder(
+      //     builder: (context) => Padding(
+      //       padding: const EdgeInsets.symmetric(
+      //           vertical: 5.0, horizontal: 5.0),
+      //       child: Container(
+      //         child: Image.asset(
+      //           'assets/hamburger.png',
+      //           height: 16,
+      //           //color: MyTheme.dark_grey,
+      //           color: MyTheme.dark_grey,
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      // ),
       title: Container(
         height: kToolbarHeight +
             statusBarHeight -

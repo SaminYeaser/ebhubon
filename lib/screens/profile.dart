@@ -649,14 +649,7 @@ class _ProfileState extends State<Profile> {
 backgroundColor: Colors.white,
       centerTitle: true,
       leading: GestureDetector(
-        child: widget.show_back_button
-            ? Builder(
-                builder: (context) => IconButton(
-                  icon: Icon(Icons.arrow_back, color: MyTheme.dark_grey),
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-              )
-            : Builder(
+        child:Builder(
                 builder: (context) => GestureDetector(
                   onTap: () {
                     _scaffoldKey.currentState.openDrawer();
