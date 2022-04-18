@@ -118,11 +118,11 @@ class _RegistrationState extends State<Registration> {
         backgroundColor: Colors.white,
         body: Stack(
           children: [
-            Container(
-              width: _screen_width * (3 / 4),
-              child: Image.asset(
-                  "assets/splash_login_registration_background_image.png"),
-            ),
+            // Container(
+            //   width: _screen_width * (3 / 4),
+            //   child: Image.asset(
+            //       "assets/splash_login_registration_background_image.png"),
+            // ),
             Container(
               width: double.infinity,
               child: SingleChildScrollView(
@@ -135,7 +135,7 @@ class _RegistrationState extends State<Registration> {
                       width: 75,
                       height: 75,
                       child:
-                          Image.asset('assets/login_registration_form_logo.png'),
+                          Image.asset('assets/ebhubon.png',height: 100,width: 100,),
                     ),
                   ),
                   Padding(

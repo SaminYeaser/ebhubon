@@ -1,6 +1,8 @@
 import 'package:active_ecommerce_flutter/screens/cart.dart';
 import 'package:active_ecommerce_flutter/screens/common_webview_screen.dart';
+import 'package:active_ecommerce_flutter/screens/livePage.dart';
 import 'package:active_ecommerce_flutter/screens/main.dart';
+import 'package:active_ecommerce_flutter/screens/offerPage.dart';
 import 'package:active_ecommerce_flutter/screens/product_reviews.dart';
 import 'package:active_ecommerce_flutter/screens/under_maintainence_page.dart';
 import 'package:active_ecommerce_flutter/ui_elements/list_product_card.dart';
@@ -34,6 +36,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:active_ecommerce_flutter/screens/brand_products.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'campagin.dart';
 import 'filter.dart';
 
 
@@ -1786,20 +1789,29 @@ class _ProductDetailsState extends State<ProductDetails> {
     );
   }
 
-  Column buildMainPriceRow() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+  Row buildMainPriceRow() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+
       children: [
         Padding(
-          padding: app_language_rtl.$ ? EdgeInsets.only(left: 8.0) : EdgeInsets.only(right: 8.0),
+          padding: app_language_rtl.$ ? EdgeInsets.only(left: 8.0) : EdgeInsets.only(right: 0.0),
           child: Container(
-            width: 75,
+            width: 35,
             child: Text(
               AppLocalizations.of(context).product_details_screen_price,
               style: TextStyle(color: Color.fromRGBO(153, 153, 153, 1)),
             ),
           ),
         ),
+        Text(
+          _singlePriceString,
+          style: TextStyle(
+              color: MyTheme.accent_color,
+              fontSize: 18.0,
+              fontWeight: FontWeight.w600),
+        ),
+        SizedBox(width: 30,),
         _productDetails.has_discount
             ? Padding(
                 padding: EdgeInsets.only(right: 8.0),
@@ -1811,13 +1823,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                         fontWeight: FontWeight.w600)),
               )
             : Container(),
-        Text(
-          _singlePriceString,
-          style: TextStyle(
-              color: MyTheme.accent_color,
-              fontSize: 18.0,
-              fontWeight: FontWeight.w600),
-        )
+        Text('You Save',style: TextStyle(color: Color.fromRGBO(153, 153, 153, 1))),
+        // Text('${(((_productDetails.stroked_price) - (_productDetails.main_price)) * 100)/ _productDetails.stroked_price}')
+
       ],
     );
   }
@@ -1851,7 +1859,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               Container(
                 child: InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>CampaignPage()));
                   },
                   child: Row(
                     children: [
@@ -1866,7 +1874,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               Container(
                 child: InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>OfferPage()));
                   },
                   child: Row(
                     children: [
@@ -1881,7 +1889,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               Container(
                 child: InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>LivePage()));
                   },
                   child: Row(
                     children: [

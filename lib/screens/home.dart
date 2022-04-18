@@ -1,6 +1,9 @@
 import 'package:active_ecommerce_flutter/my_theme.dart';
+import 'package:active_ecommerce_flutter/screens/campagin.dart';
 import 'package:active_ecommerce_flutter/screens/filter.dart';
 import 'package:active_ecommerce_flutter/screens/flash_deal_list.dart';
+import 'package:active_ecommerce_flutter/screens/livePage.dart';
+import 'package:active_ecommerce_flutter/screens/offerPage.dart';
 import 'package:active_ecommerce_flutter/screens/todays_deal_products.dart';
 import 'package:active_ecommerce_flutter/screens/top_selling_products.dart';
 import 'package:active_ecommerce_flutter/screens/category_products.dart';
@@ -21,6 +24,7 @@ import 'package:active_ecommerce_flutter/ui_elements/product_card.dart';
 import 'package:active_ecommerce_flutter/helpers/shimmer_helper.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import 'main.dart';
 
@@ -204,691 +208,696 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         child: Scaffold(
             key: _scaffoldKey,
             backgroundColor: Colors.white,
-            appBar: buildAppBar(statusBarHeight, context),
+            // appBar: buildAppBar(statusBarHeight, context),
             drawer: MainDrawer(),
-            body: Stack(
-              children: [
-                RefreshIndicator(
-                  color: MyTheme.accent_color,
-                  backgroundColor: Colors.white,
-                  onRefresh: _onRefresh,
-                  displacement: 0,
-                  child: CustomScrollView(
-                    controller: _mainScrollController,
-                    physics: const BouncingScrollPhysics(
-                        parent: AlwaysScrollableScrollPhysics()),
-                    slivers: <Widget>[
-                      SliverList(
-                        delegate: SliverChildListDelegate([
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(
-                              5.0,
-                              0.0,
-                              5.0,
-                              0.0,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Divider(
-                                  color: Colors.grey,
-                                ),
-                                // Padding(
-                                //   padding: EdgeInsets.only(bottom: 10, left: 30, right: 30),
-                                //   child: Row(
-                                //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                //     children: [
-                                //       Container(
-                                //         child: InkWell(
-                                //           onTap: (){
-                                //             Navigator.push(context, MaterialPageRoute(builder: (context)=>Main()));
-                                //           },
-                                //           child: Row(
-                                //             children: [
-                                //               Icon(Icons.home,color: Colors.red,),
-                                //               Text('Home',style: TextStyle(
-                                //                 fontSize: 16
-                                //               ),)
-                                //             ],
-                                //           ),
-                                //         ),
-                                //       ),
-                                //       Container(
-                                //         child: InkWell(
-                                //           onTap: (){
-                                //             Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
-                                //           },
-                                //           child: Row(
-                                //             children: [
-                                //               Icon(Icons.campaign,color: Colors.red,),
-                                //               Text('Campaign',style: TextStyle(
-                                //                   fontSize: 16
-                                //               ),)
-                                //             ],
-                                //           ),
-                                //         ),
-                                //       ),
-                                //       Container(
-                                //         child: InkWell(
-                                //           onTap: (){
-                                //             Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
-                                //           },
-                                //           child: Row(
-                                //             children: [
-                                //               Icon(Icons.local_offer,color: Colors.red,),
-                                //               Text('Offers',style: TextStyle(
-                                //                   fontSize: 16
-                                //               ),)
-                                //             ],
-                                //           ),
-                                //         ),
-                                //       ),
-                                //       Container(
-                                //         child: InkWell(
-                                //           onTap: (){
-                                //             Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
-                                //           },
-                                //           child: Row(
-                                //             children: [
-                                //               Icon(Icons.video_call,color: Colors.red,),
-                                //               Text('Live',style: TextStyle(
-                                //                   fontSize: 16
-                                //               ),)
-                                //             ],
-                                //           ),
-                                //         ),
-                                //       )
-                                //     ],
-                                //   ),
-                                // ),
-
-                                CarouselSlider(
-                                  options: CarouselOptions(
-                                    height: 100,
-                                    viewportFraction: 1.0,
-                                    enlargeCenterPage: false,
-                                    autoPlay: true,
-                                    onPageChanged: (index, reason){
-                                      setState(() {
-                                        _currentSliderBanner = index;
-                                      });
-                                    }
-                                    // autoPlay: false,
-                                  ),
-                                  items: _bannerImageList.map((e) => Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    child: Image.asset(e,fit: BoxFit.cover),
-                                  )).toList(),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: _bannerImageList.asMap().entries.map((entry) {
-                                    return GestureDetector(
-                                      onTap: () => _bannerCarouselController.animateToPage(entry.key),
-                                      child: Container(
-                                        width: 5.0,
-                                        height: 5.0,
-                                        margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: (Theme.of(context).brightness == Brightness.dark
-                                                ? Colors.white
-                                                : Colors.black)
-                                                .withOpacity(_currentSliderBanner == entry.key ? 0.9 : 0.4)),
-                                      ),
-                                    );
-                                  }).toList(),
-                                ),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                              return CategoryProducts(
-                                                category_id: 3,
-                                                category_name: 'property',
-                                              );
-                                            }));
-                                          },
-                                        child: Image.asset('assets/property.jpg'),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: GestureDetector(
-                                        onTap: (){
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                            return CategoryProducts(
-                                              category_id: 6,
-                                              category_name: 'Grocery & Household',
-                                            );
-                                          }));
-                                        },
-                                          child: Image.asset('assets/grocery.jpg')),
-                                    )
-                                  ],
-                                ),
-
-                              ],
-                            ),
-                          ),
-                        ]),
-                      ),
-                      SliverToBoxAdapter(
-                        child: SizedBox(
-                          height: 154,
-                          child: buildHomeFeaturedCategories(context),
-                        ),
-                      ),
-                      SliverList(delegate: SliverChildListDelegate([
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                          child: CarouselSlider(
-                            options: CarouselOptions(
-                                height: 100,
-                                viewportFraction: 1.0,
-                                enlargeCenterPage: false,
-                                autoPlay: true,
-                                onPageChanged: (index, reason){
-                                  // setState(() {
-                                  //   _currentSliderBanner = index;
-                                  // });
-                                }
-                              // autoPlay: false,
-                            ),
-                            items: _secondBannerList.map((e) => Container(
-                              width: MediaQuery.of(context).size.width,
-                              child: Image.asset(e,fit: BoxFit.cover),
-                            )).toList(),
-                          ),
-                        ),
-                      ])),
-                      // SliverList(delegate: SliverChildListDelegate([
-                      //     Card(
-                      //       elevation: 5,
-                      //       child: Padding(
-                      //         padding: const EdgeInsets.fromLTRB(
-                      //           16.0,
-                      //           16.0,
-                      //           16.0,
-                      //           16.0,
-                      //         ),
-                      //         child: Column(
-                      //           children: [
-                      //             Row(
-                      //               mainAxisAlignment:
-                      //               MainAxisAlignment.spaceBetween,
-                      //               children: [
-                      //                 Text(
-                      //                   'Brand',
-                      //                   style: TextStyle(fontSize: 16),
-                      //                 ),
-                      //                 ElevatedButton(
-                      //                   onPressed: () {
-                      //                     Navigator.push(
-                      //                         context,
-                      //                         MaterialPageRoute(
-                      //                             builder: (context) =>
-                      //                                 CategoryList()));
-                      //                   },
-                      //                   style: ElevatedButton.styleFrom(
-                      //                       minimumSize: Size(80, 35),
-                      //                       primary: Colors.red,
-                      //                       shape: RoundedRectangleBorder(
-                      //                           borderRadius:
-                      //                           BorderRadius.circular(30))),
-                      //                   child: Text('More'),
-                      //                 )
-                      //               ],
-                      //             ),
-                      //             Row(
-                      //               children: [
-                      //                 Expanded(
-                      //                   flex: 1,
-                      //                   child: Divider(
-                      //                     color: Colors.red,
-                      //                     thickness: 4,
-                      //                   ),
-                      //                 ),
-                      //                 Expanded(
-                      //                   flex: 5,
-                      //                   child: Divider(
-                      //                     color: Colors.grey,
-                      //                     thickness: 2,
-                      //                   ),
-                      //                 ),
-                      //               ],
-                      //             ),
-                      //             CarouselSlider(
-                      //               options: CarouselOptions(
-                      //                   height: 100,
-                      //                   viewportFraction: 1.0,
-                      //                   enlargeCenterPage: false,
-                      //                   autoPlay: true,
-                      //                   onPageChanged: (index, reason){
-                      //                     // setState(() {
-                      //                     //   _currentSliderBanner = index;
-                      //                     // });
-                      //                   }
-                      //                 // autoPlay: false,
-                      //               ),
-                      //               items: _secondBannerList.map((e) => Container(
-                      //                 width: MediaQuery.of(context).size.width,
-                      //                 child: Image.asset(e,fit: BoxFit.cover),
-                      //               )).toList(),
-                      //             )
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     )
-                      // ]
-                      // )),
-                      SliverList(
-                        delegate: SliverChildListDelegate([
-                          Card(
-                            elevation: 5,
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                16.0,
-                                16.0,
-                                16.0,
-                                16.0,
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'All category',
-                                        style: TextStyle(fontSize: 16),
-                                      ),
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      CategoryList()));
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                            minimumSize: Size(80, 35),
-                                            primary: Colors.red,
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(30))),
-                                        child: Text('More'),
-                                      )
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: Divider(
-                                          color: Colors.red,
-                                          thickness: 4,
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 4,
-                                        child: Divider(
-                                          color: Colors.grey,
-                                          thickness: 2,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 220,
-                                    width: MediaQuery.of(context).size.width,
-                                    child: _allCategoryList.length == 0
-                                        ? SingleChildScrollView(
-                                            child: ShimmerHelper()
-                                                .buildProductGridShimmer(
-                                                    scontroller:
-                                                        _featuredProductScrollController))
-                                        : Stack(
-                                            alignment: Alignment.center,
-                                            children: [
-                                              CarouselSlider.builder(
-                                                  options: CarouselOptions(
-                                                      viewportFraction: 1,
-                                                      enlargeCenterPage: true),
-                                                  carouselController:
-                                                      carousleController,
-                                                  itemCount:
-                                                      _allCategoryList.length,
-                                                  itemBuilder: (context, index,
-                                                      realIndex) {
-                                                    return Row(
-                                                      children: [
-                                                        Expanded(
-                                                          child:
-                                                              GestureDetector(
-                                                            onTap: () {
-                                                              Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      builder:
-                                                                          (context) {
-                                                                return CategoryProducts(
-                                                                  category_id:
-                                                                      _allCategoryList[
-                                                                              index]
-                                                                          .id,
-                                                                  category_name:
-                                                                      _allCategoryList[
-                                                                              index]
-                                                                          .name,
-                                                                );
-                                                              }));
-                                                            },
-                                                            child: Card(
-                                                              clipBehavior: Clip
-                                                                  .antiAliasWithSaveLayer,
-                                                              shape:
-                                                                  RoundedRectangleBorder(
-                                                                side: new BorderSide(
-                                                                    color: MyTheme
-                                                                        .light_grey,
-                                                                    width: 1.0),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            16.0),
-                                                              ),
-                                                              elevation: 0.0,
-                                                              child: Column(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                children: <
-                                                                    Widget>[
-                                                                  Container(
-                                                                      child: ClipRRect(
-                                                                          borderRadius: BorderRadius.vertical(top: Radius.circular(16), bottom: Radius.zero),
-                                                                          child: FadeInImage.assetNetwork(
-                                                                            height:
-                                                                                100,
-                                                                            placeholder:
-                                                                                'assets/placeholder.png',
-                                                                            image: AppConfig.BASE_PATH + _allCategoryList[index].icon == ''
-                                                                                ? AppConfig.BASE_PATH + _allCategoryList[index].banner
-                                                                                : AppConfig.BASE_PATH + _allCategoryList[index].icon,
-                                                                            fit:
-                                                                                BoxFit.cover,
-                                                                          ))),
-                                                                  Padding(
-                                                                    padding: EdgeInsets
-                                                                        .fromLTRB(
-                                                                            8,
-                                                                            8,
-                                                                            8,
-                                                                            4),
-                                                                    child:
-                                                                        Container(
-                                                                      // height: 32,
-                                                                      child:
-                                                                          Text(
-                                                                        _allCategoryList[index]
-                                                                            .name,
-                                                                        textAlign:
-                                                                            TextAlign.center,
-                                                                        overflow:
-                                                                            TextOverflow.ellipsis,
-                                                                        maxLines:
-                                                                            2,
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                11,
-                                                                            color:
-                                                                                MyTheme.font_grey),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  Text('\$140',
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              11,
-                                                                          color:
-                                                                              Colors.red)),
-                                                                  Expanded(
-                                                                      child: RatingBar
-                                                                          .builder(
-                                                                    itemBuilder:
-                                                                        (context,
-                                                                                _) =>
-                                                                            Icon(
-                                                                      Icons
-                                                                          .star,
-                                                                      color: Colors
-                                                                          .yellow,
-                                                                              size: 10,
-                                                                    ),
-                                                                        initialRating: 2,
-                                                                        minRating: 1, onRatingUpdate: (double value) {  },
-                                                                        maxRating: 5,
-                                                                        itemSize: 20,
-                                                                  ))
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Expanded(
-                                                          child:
-                                                              GestureDetector(
-                                                            onTap: () {
-                                                              Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      builder:
-                                                                          (context) {
-                                                                return CategoryProducts(
-                                                                  category_id:
-                                                                      _allCategoryList[index +
-                                                                              1]
-                                                                          .id,
-                                                                  category_name:
-                                                                      _allCategoryList[index +
-                                                                              1]
-                                                                          .name,
-                                                                );
-                                                              }));
-                                                            },
-                                                            child: Card(
-                                                              clipBehavior: Clip
-                                                                  .antiAliasWithSaveLayer,
-                                                              shape:
-                                                                  RoundedRectangleBorder(
-                                                                side: new BorderSide(
-                                                                    color: MyTheme
-                                                                        .light_grey,
-                                                                    width: 1.0),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            16.0),
-                                                              ),
-                                                              elevation: 0.0,
-                                                              child: Column(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                children: <
-                                                                    Widget>[
-                                                                  Container(
-                                                                      child: ClipRRect(
-                                                                          borderRadius: BorderRadius.vertical(top: Radius.circular(16), bottom: Radius.zero),
-                                                                          child: FadeInImage.assetNetwork(
-                                                                            height:
-                                                                                100,
-                                                                            placeholder:
-                                                                                'assets/placeholder.png',
-                                                                            image: AppConfig.BASE_PATH + _allCategoryList[index + 1].icon == ''
-                                                                                ? AppConfig.BASE_PATH + _allCategoryList[index + 1].banner
-                                                                                : AppConfig.BASE_PATH + _allCategoryList[index + 1].icon,
-                                                                            fit:
-                                                                                BoxFit.cover,
-                                                                          ))),
-                                                                  Padding(
-                                                                    padding: EdgeInsets
-                                                                        .fromLTRB(
-                                                                            8,
-                                                                            8,
-                                                                            8,
-                                                                            4),
-                                                                    child:
-                                                                        Container(
-                                                                      // height: 32,
-                                                                      child:
-                                                                          Text(
-                                                                        _allCategoryList[index +
-                                                                                1]
-                                                                            .name,
-                                                                        textAlign:
-                                                                            TextAlign.center,
-                                                                        overflow:
-                                                                            TextOverflow.ellipsis,
-                                                                        maxLines:
-                                                                            2,
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                11,
-                                                                            color:
-                                                                                MyTheme.font_grey),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  Text('\$140',
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              11,
-                                                                          color:
-                                                                              Colors.red)),
-                                                                  Expanded(
-                                                                      child: RatingBar
-                                                                          .builder(
-                                                                    itemBuilder:
-                                                                        (context,
-                                                                                _) =>
-                                                                            Icon(
-                                                                      Icons
-                                                                          .star,
-                                                                      color: Colors
-                                                                          .yellow,
-                                                                    ),
-                                                                        initialRating: 2,
-                                                                        minRating: 1, onRatingUpdate: (double value) {  },
-                                                                        maxRating: 5,
-                                                                        itemSize: 20,
-                                                                  ))
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    );
-                                                  }),
-                                              Center(
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    ElevatedButton(
-                                                      onPressed: previous,
-                                                      style: ElevatedButton
-                                                          .styleFrom(
-                                                              shape:
-                                                                  CircleBorder(),
-                                                              primary:
-                                                                  Colors.white),
-                                                      child: Icon(
-                                                        Icons
-                                                            .arrow_back_ios_outlined,
-                                                        color: Colors.black,
-                                                      ),
-                                                    ),
-                                                    ElevatedButton(
-                                                        onPressed: next,
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                                shape:
-                                                                    CircleBorder(),
-                                                                primary: Colors
-                                                                    .white),
-                                                        child: Icon(
-                                                          Icons
-                                                              .arrow_forward_ios_outlined,
-                                                          color: Colors.black,
-                                                        ))
-                                                  ],
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        ]),
-                      ),
-                      SliverList(
-                        delegate: SliverChildListDelegate([
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(
-                              16.0,
-                              16.0,
-                              16.0,
-                              0.0,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  AppLocalizations.of(context)
-                                      .home_screen_featured_products,
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(
-                                    4.0,
-                                    16.0,
-                                    8.0,
-                                    0.0,
-                                  ),
-                                  child: buildHomeFeaturedProducts(context),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            height: 80,
-                          )
-                        ]),
-                      ),
-                    ],
-                  ),
-                ),
-                Align(
-                    alignment: Alignment.center,
-                    child: buildProductLoadingContainer())
-              ],
-            )),
+            body: SafeArea(
+    child: WebView(initialUrl: 'https://ebhubon.net/',
+    javascriptMode: JavascriptMode.unrestricted,
+    ),
+    )
+            // Stack(
+            //   children: [
+            //     RefreshIndicator(
+            //       color: MyTheme.accent_color,
+            //       backgroundColor: Colors.white,
+            //       onRefresh: _onRefresh,
+            //       displacement: 0,
+            //       child: CustomScrollView(
+            //         controller: _mainScrollController,
+            //         physics: const BouncingScrollPhysics(
+            //             parent: AlwaysScrollableScrollPhysics()),
+            //         slivers: <Widget>[
+            //           SliverList(
+            //             delegate: SliverChildListDelegate([
+            //               Padding(
+            //                 padding: const EdgeInsets.fromLTRB(
+            //                   5.0,
+            //                   0.0,
+            //                   5.0,
+            //                   0.0,
+            //                 ),
+            //                 child: Column(
+            //                   crossAxisAlignment: CrossAxisAlignment.start,
+            //                   children: [
+            //                     Divider(
+            //                       color: Colors.grey,
+            //                     ),
+            //                     // Padding(
+            //                     //   padding: EdgeInsets.only(bottom: 10, left: 30, right: 30),
+            //                     //   child: Row(
+            //                     //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //                     //     children: [
+            //                     //       Container(
+            //                     //         child: InkWell(
+            //                     //           onTap: (){
+            //                     //             Navigator.push(context, MaterialPageRoute(builder: (context)=>Main()));
+            //                     //           },
+            //                     //           child: Row(
+            //                     //             children: [
+            //                     //               Icon(Icons.home,color: Colors.red,),
+            //                     //               Text('Home',style: TextStyle(
+            //                     //                 fontSize: 16
+            //                     //               ),)
+            //                     //             ],
+            //                     //           ),
+            //                     //         ),
+            //                     //       ),
+            //                     //       Container(
+            //                     //         child: InkWell(
+            //                     //           onTap: (){
+            //                     //             Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+            //                     //           },
+            //                     //           child: Row(
+            //                     //             children: [
+            //                     //               Icon(Icons.campaign,color: Colors.red,),
+            //                     //               Text('Campaign',style: TextStyle(
+            //                     //                   fontSize: 16
+            //                     //               ),)
+            //                     //             ],
+            //                     //           ),
+            //                     //         ),
+            //                     //       ),
+            //                     //       Container(
+            //                     //         child: InkWell(
+            //                     //           onTap: (){
+            //                     //             Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+            //                     //           },
+            //                     //           child: Row(
+            //                     //             children: [
+            //                     //               Icon(Icons.local_offer,color: Colors.red,),
+            //                     //               Text('Offers',style: TextStyle(
+            //                     //                   fontSize: 16
+            //                     //               ),)
+            //                     //             ],
+            //                     //           ),
+            //                     //         ),
+            //                     //       ),
+            //                     //       Container(
+            //                     //         child: InkWell(
+            //                     //           onTap: (){
+            //                     //             Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+            //                     //           },
+            //                     //           child: Row(
+            //                     //             children: [
+            //                     //               Icon(Icons.video_call,color: Colors.red,),
+            //                     //               Text('Live',style: TextStyle(
+            //                     //                   fontSize: 16
+            //                     //               ),)
+            //                     //             ],
+            //                     //           ),
+            //                     //         ),
+            //                     //       )
+            //                     //     ],
+            //                     //   ),
+            //                     // ),
+            //
+            //                     CarouselSlider(
+            //                       options: CarouselOptions(
+            //                         height: 100,
+            //                         viewportFraction: 1.0,
+            //                         enlargeCenterPage: false,
+            //                         autoPlay: true,
+            //                         onPageChanged: (index, reason){
+            //                           setState(() {
+            //                             _currentSliderBanner = index;
+            //                           });
+            //                         }
+            //                         // autoPlay: false,
+            //                       ),
+            //                       items: _bannerImageList.map((e) => Container(
+            //                         width: MediaQuery.of(context).size.width,
+            //                         child: Image.asset(e,fit: BoxFit.cover),
+            //                       )).toList(),
+            //                     ),
+            //                     Row(
+            //                       mainAxisAlignment: MainAxisAlignment.center,
+            //                       children: _bannerImageList.asMap().entries.map((entry) {
+            //                         return GestureDetector(
+            //                           onTap: () => _bannerCarouselController.animateToPage(entry.key),
+            //                           child: Container(
+            //                             width: 5.0,
+            //                             height: 5.0,
+            //                             margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+            //                             decoration: BoxDecoration(
+            //                                 shape: BoxShape.circle,
+            //                                 color: (Theme.of(context).brightness == Brightness.dark
+            //                                     ? Colors.white
+            //                                     : Colors.black)
+            //                                     .withOpacity(_currentSliderBanner == entry.key ? 0.9 : 0.4)),
+            //                           ),
+            //                         );
+            //                       }).toList(),
+            //                     ),
+            //                     Row(
+            //                       children: [
+            //                         Expanded(
+            //                           child: GestureDetector(
+            //                               onTap: () {
+            //                                 Navigator.push(context, MaterialPageRoute(builder: (context) {
+            //                                   return CategoryProducts(
+            //                                     category_id: 3,
+            //                                     category_name: 'property',
+            //                                   );
+            //                                 }));
+            //                               },
+            //                             child: Image.asset('assets/property.jpg'),
+            //                           ),
+            //                         ),
+            //                         Expanded(
+            //                           child: GestureDetector(
+            //                             onTap: (){
+            //                               Navigator.push(context, MaterialPageRoute(builder: (context) {
+            //                                 return CategoryProducts(
+            //                                   category_id: 6,
+            //                                   category_name: 'Grocery & Household',
+            //                                 );
+            //                               }));
+            //                             },
+            //                               child: Image.asset('assets/grocery.jpg')),
+            //                         )
+            //                       ],
+            //                     ),
+            //
+            //                   ],
+            //                 ),
+            //               ),
+            //             ]),
+            //           ),
+            //           SliverToBoxAdapter(
+            //             child: SizedBox(
+            //               height: 154,
+            //               child: buildHomeFeaturedCategories(context),
+            //             ),
+            //           ),
+            //           SliverList(delegate: SliverChildListDelegate([
+            //             Padding(
+            //               padding: const EdgeInsets.symmetric(horizontal: 5.0),
+            //               child: CarouselSlider(
+            //                 options: CarouselOptions(
+            //                     height: 100,
+            //                     viewportFraction: 1.0,
+            //                     enlargeCenterPage: false,
+            //                     autoPlay: true,
+            //                     onPageChanged: (index, reason){
+            //                       // setState(() {
+            //                       //   _currentSliderBanner = index;
+            //                       // });
+            //                     }
+            //                   // autoPlay: false,
+            //                 ),
+            //                 items: _secondBannerList.map((e) => Container(
+            //                   width: MediaQuery.of(context).size.width,
+            //                   child: Image.asset(e,fit: BoxFit.cover),
+            //                 )).toList(),
+            //               ),
+            //             ),
+            //           ])),
+            //           // SliverList(delegate: SliverChildListDelegate([
+            //           //     Card(
+            //           //       elevation: 5,
+            //           //       child: Padding(
+            //           //         padding: const EdgeInsets.fromLTRB(
+            //           //           16.0,
+            //           //           16.0,
+            //           //           16.0,
+            //           //           16.0,
+            //           //         ),
+            //           //         child: Column(
+            //           //           children: [
+            //           //             Row(
+            //           //               mainAxisAlignment:
+            //           //               MainAxisAlignment.spaceBetween,
+            //           //               children: [
+            //           //                 Text(
+            //           //                   'Brand',
+            //           //                   style: TextStyle(fontSize: 16),
+            //           //                 ),
+            //           //                 ElevatedButton(
+            //           //                   onPressed: () {
+            //           //                     Navigator.push(
+            //           //                         context,
+            //           //                         MaterialPageRoute(
+            //           //                             builder: (context) =>
+            //           //                                 CategoryList()));
+            //           //                   },
+            //           //                   style: ElevatedButton.styleFrom(
+            //           //                       minimumSize: Size(80, 35),
+            //           //                       primary: Colors.red,
+            //           //                       shape: RoundedRectangleBorder(
+            //           //                           borderRadius:
+            //           //                           BorderRadius.circular(30))),
+            //           //                   child: Text('More'),
+            //           //                 )
+            //           //               ],
+            //           //             ),
+            //           //             Row(
+            //           //               children: [
+            //           //                 Expanded(
+            //           //                   flex: 1,
+            //           //                   child: Divider(
+            //           //                     color: Colors.red,
+            //           //                     thickness: 4,
+            //           //                   ),
+            //           //                 ),
+            //           //                 Expanded(
+            //           //                   flex: 5,
+            //           //                   child: Divider(
+            //           //                     color: Colors.grey,
+            //           //                     thickness: 2,
+            //           //                   ),
+            //           //                 ),
+            //           //               ],
+            //           //             ),
+            //           //             CarouselSlider(
+            //           //               options: CarouselOptions(
+            //           //                   height: 100,
+            //           //                   viewportFraction: 1.0,
+            //           //                   enlargeCenterPage: false,
+            //           //                   autoPlay: true,
+            //           //                   onPageChanged: (index, reason){
+            //           //                     // setState(() {
+            //           //                     //   _currentSliderBanner = index;
+            //           //                     // });
+            //           //                   }
+            //           //                 // autoPlay: false,
+            //           //               ),
+            //           //               items: _secondBannerList.map((e) => Container(
+            //           //                 width: MediaQuery.of(context).size.width,
+            //           //                 child: Image.asset(e,fit: BoxFit.cover),
+            //           //               )).toList(),
+            //           //             )
+            //           //           ],
+            //           //         ),
+            //           //       ),
+            //           //     )
+            //           // ]
+            //           // )),
+            //           SliverList(
+            //             delegate: SliverChildListDelegate([
+            //               Card(
+            //                 elevation: 5,
+            //                 child: Padding(
+            //                   padding: const EdgeInsets.fromLTRB(
+            //                     16.0,
+            //                     16.0,
+            //                     16.0,
+            //                     16.0,
+            //                   ),
+            //                   child: Column(
+            //                     crossAxisAlignment: CrossAxisAlignment.start,
+            //                     children: [
+            //                       Row(
+            //                         mainAxisAlignment:
+            //                             MainAxisAlignment.spaceBetween,
+            //                         children: [
+            //                           Text(
+            //                             'All category',
+            //                             style: TextStyle(fontSize: 16),
+            //                           ),
+            //                           ElevatedButton(
+            //                             onPressed: () {
+            //                               Navigator.push(
+            //                                   context,
+            //                                   MaterialPageRoute(
+            //                                       builder: (context) =>
+            //                                           CategoryList()));
+            //                             },
+            //                             style: ElevatedButton.styleFrom(
+            //                                 minimumSize: Size(80, 35),
+            //                                 primary: Colors.red,
+            //                                 shape: RoundedRectangleBorder(
+            //                                     borderRadius:
+            //                                         BorderRadius.circular(30))),
+            //                             child: Text('More'),
+            //                           )
+            //                         ],
+            //                       ),
+            //                       Row(
+            //                         children: [
+            //                           Expanded(
+            //                             flex: 1,
+            //                             child: Divider(
+            //                               color: Colors.red,
+            //                               thickness: 4,
+            //                             ),
+            //                           ),
+            //                           Expanded(
+            //                             flex: 4,
+            //                             child: Divider(
+            //                               color: Colors.grey,
+            //                               thickness: 2,
+            //                             ),
+            //                           ),
+            //                         ],
+            //                       ),
+            //                       SizedBox(
+            //                         height: 220,
+            //                         width: MediaQuery.of(context).size.width,
+            //                         child: _allCategoryList.length == 0
+            //                             ? SingleChildScrollView(
+            //                                 child: ShimmerHelper()
+            //                                     .buildProductGridShimmer(
+            //                                         scontroller:
+            //                                             _featuredProductScrollController))
+            //                             : Stack(
+            //                                 alignment: Alignment.center,
+            //                                 children: [
+            //                                   CarouselSlider.builder(
+            //                                       options: CarouselOptions(
+            //                                           viewportFraction: 1,
+            //                                           enlargeCenterPage: true),
+            //                                       carouselController:
+            //                                           carousleController,
+            //                                       itemCount:
+            //                                           _allCategoryList.length,
+            //                                       itemBuilder: (context, index,
+            //                                           realIndex) {
+            //                                         return Row(
+            //                                           children: [
+            //                                             Expanded(
+            //                                               child:
+            //                                                   GestureDetector(
+            //                                                 onTap: () {
+            //                                                   Navigator.push(
+            //                                                       context,
+            //                                                       MaterialPageRoute(
+            //                                                           builder:
+            //                                                               (context) {
+            //                                                     return CategoryProducts(
+            //                                                       category_id:
+            //                                                           _allCategoryList[
+            //                                                                   index]
+            //                                                               .id,
+            //                                                       category_name:
+            //                                                           _allCategoryList[
+            //                                                                   index]
+            //                                                               .name,
+            //                                                     );
+            //                                                   }));
+            //                                                 },
+            //                                                 child: Card(
+            //                                                   clipBehavior: Clip
+            //                                                       .antiAliasWithSaveLayer,
+            //                                                   shape:
+            //                                                       RoundedRectangleBorder(
+            //                                                     side: new BorderSide(
+            //                                                         color: MyTheme
+            //                                                             .light_grey,
+            //                                                         width: 1.0),
+            //                                                     borderRadius:
+            //                                                         BorderRadius
+            //                                                             .circular(
+            //                                                                 16.0),
+            //                                                   ),
+            //                                                   elevation: 0.0,
+            //                                                   child: Column(
+            //                                                     mainAxisAlignment:
+            //                                                         MainAxisAlignment
+            //                                                             .center,
+            //                                                     children: <
+            //                                                         Widget>[
+            //                                                       Container(
+            //                                                           child: ClipRRect(
+            //                                                               borderRadius: BorderRadius.vertical(top: Radius.circular(16), bottom: Radius.zero),
+            //                                                               child: FadeInImage.assetNetwork(
+            //                                                                 height:
+            //                                                                     100,
+            //                                                                 placeholder:
+            //                                                                     'assets/placeholder.png',
+            //                                                                 image: AppConfig.BASE_PATH + _allCategoryList[index].icon == ''
+            //                                                                     ? AppConfig.BASE_PATH + _allCategoryList[index].banner
+            //                                                                     : AppConfig.BASE_PATH + _allCategoryList[index].icon,
+            //                                                                 fit:
+            //                                                                     BoxFit.cover,
+            //                                                               ))),
+            //                                                       Padding(
+            //                                                         padding: EdgeInsets
+            //                                                             .fromLTRB(
+            //                                                                 8,
+            //                                                                 8,
+            //                                                                 8,
+            //                                                                 4),
+            //                                                         child:
+            //                                                             Container(
+            //                                                           // height: 32,
+            //                                                           child:
+            //                                                               Text(
+            //                                                             _allCategoryList[index]
+            //                                                                 .name,
+            //                                                             textAlign:
+            //                                                                 TextAlign.center,
+            //                                                             overflow:
+            //                                                                 TextOverflow.ellipsis,
+            //                                                             maxLines:
+            //                                                                 2,
+            //                                                             style: TextStyle(
+            //                                                                 fontSize:
+            //                                                                     11,
+            //                                                                 color:
+            //                                                                     MyTheme.font_grey),
+            //                                                           ),
+            //                                                         ),
+            //                                                       ),
+            //                                                       Text('\$140',
+            //                                                           style: TextStyle(
+            //                                                               fontSize:
+            //                                                                   11,
+            //                                                               color:
+            //                                                                   Colors.red)),
+            //                                                       Expanded(
+            //                                                           child: RatingBar
+            //                                                               .builder(
+            //                                                         itemBuilder:
+            //                                                             (context,
+            //                                                                     _) =>
+            //                                                                 Icon(
+            //                                                           Icons
+            //                                                               .star,
+            //                                                           color: Colors
+            //                                                               .yellow,
+            //                                                                   size: 10,
+            //                                                         ),
+            //                                                             initialRating: 2,
+            //                                                             minRating: 1, onRatingUpdate: (double value) {  },
+            //                                                             maxRating: 5,
+            //                                                             itemSize: 20,
+            //                                                       ))
+            //                                                     ],
+            //                                                   ),
+            //                                                 ),
+            //                                               ),
+            //                                             ),
+            //                                             Expanded(
+            //                                               child:
+            //                                                   GestureDetector(
+            //                                                 onTap: () {
+            //                                                   Navigator.push(
+            //                                                       context,
+            //                                                       MaterialPageRoute(
+            //                                                           builder:
+            //                                                               (context) {
+            //                                                     return CategoryProducts(
+            //                                                       category_id:
+            //                                                           _allCategoryList[index +
+            //                                                                   1]
+            //                                                               .id,
+            //                                                       category_name:
+            //                                                           _allCategoryList[index +
+            //                                                                   1]
+            //                                                               .name,
+            //                                                     );
+            //                                                   }));
+            //                                                 },
+            //                                                 child: Card(
+            //                                                   clipBehavior: Clip
+            //                                                       .antiAliasWithSaveLayer,
+            //                                                   shape:
+            //                                                       RoundedRectangleBorder(
+            //                                                     side: new BorderSide(
+            //                                                         color: MyTheme
+            //                                                             .light_grey,
+            //                                                         width: 1.0),
+            //                                                     borderRadius:
+            //                                                         BorderRadius
+            //                                                             .circular(
+            //                                                                 16.0),
+            //                                                   ),
+            //                                                   elevation: 0.0,
+            //                                                   child: Column(
+            //                                                     mainAxisAlignment:
+            //                                                         MainAxisAlignment
+            //                                                             .center,
+            //                                                     children: <
+            //                                                         Widget>[
+            //                                                       Container(
+            //                                                           child: ClipRRect(
+            //                                                               borderRadius: BorderRadius.vertical(top: Radius.circular(16), bottom: Radius.zero),
+            //                                                               child: FadeInImage.assetNetwork(
+            //                                                                 height:
+            //                                                                     100,
+            //                                                                 placeholder:
+            //                                                                     'assets/placeholder.png',
+            //                                                                 image: AppConfig.BASE_PATH + _allCategoryList[index + 1].icon == ''
+            //                                                                     ? AppConfig.BASE_PATH + _allCategoryList[index + 1].banner
+            //                                                                     : AppConfig.BASE_PATH + _allCategoryList[index + 1].icon,
+            //                                                                 fit:
+            //                                                                     BoxFit.cover,
+            //                                                               ))),
+            //                                                       Padding(
+            //                                                         padding: EdgeInsets
+            //                                                             .fromLTRB(
+            //                                                                 8,
+            //                                                                 8,
+            //                                                                 8,
+            //                                                                 4),
+            //                                                         child:
+            //                                                             Container(
+            //                                                           // height: 32,
+            //                                                           child:
+            //                                                               Text(
+            //                                                             _allCategoryList[index +
+            //                                                                     1]
+            //                                                                 .name,
+            //                                                             textAlign:
+            //                                                                 TextAlign.center,
+            //                                                             overflow:
+            //                                                                 TextOverflow.ellipsis,
+            //                                                             maxLines:
+            //                                                                 2,
+            //                                                             style: TextStyle(
+            //                                                                 fontSize:
+            //                                                                     11,
+            //                                                                 color:
+            //                                                                     MyTheme.font_grey),
+            //                                                           ),
+            //                                                         ),
+            //                                                       ),
+            //                                                       Text('\$140',
+            //                                                           style: TextStyle(
+            //                                                               fontSize:
+            //                                                                   11,
+            //                                                               color:
+            //                                                                   Colors.red)),
+            //                                                       Expanded(
+            //                                                           child: RatingBar
+            //                                                               .builder(
+            //                                                         itemBuilder:
+            //                                                             (context,
+            //                                                                     _) =>
+            //                                                                 Icon(
+            //                                                           Icons
+            //                                                               .star,
+            //                                                           color: Colors
+            //                                                               .yellow,
+            //                                                         ),
+            //                                                             initialRating: 2,
+            //                                                             minRating: 1, onRatingUpdate: (double value) {  },
+            //                                                             maxRating: 5,
+            //                                                             itemSize: 20,
+            //                                                       ))
+            //                                                     ],
+            //                                                   ),
+            //                                                 ),
+            //                                               ),
+            //                                             ),
+            //                                           ],
+            //                                         );
+            //                                       }),
+            //                                   Center(
+            //                                     child: Row(
+            //                                       mainAxisAlignment:
+            //                                           MainAxisAlignment
+            //                                               .spaceBetween,
+            //                                       children: [
+            //                                         ElevatedButton(
+            //                                           onPressed: previous,
+            //                                           style: ElevatedButton
+            //                                               .styleFrom(
+            //                                                   shape:
+            //                                                       CircleBorder(),
+            //                                                   primary:
+            //                                                       Colors.white),
+            //                                           child: Icon(
+            //                                             Icons
+            //                                                 .arrow_back_ios_outlined,
+            //                                             color: Colors.black,
+            //                                           ),
+            //                                         ),
+            //                                         ElevatedButton(
+            //                                             onPressed: next,
+            //                                             style: ElevatedButton
+            //                                                 .styleFrom(
+            //                                                     shape:
+            //                                                         CircleBorder(),
+            //                                                     primary: Colors
+            //                                                         .white),
+            //                                             child: Icon(
+            //                                               Icons
+            //                                                   .arrow_forward_ios_outlined,
+            //                                               color: Colors.black,
+            //                                             ))
+            //                                       ],
+            //                                     ),
+            //                                   )
+            //                                 ],
+            //                               ),
+            //                       )
+            //                     ],
+            //                   ),
+            //                 ),
+            //               ),
+            //             ]),
+            //           ),
+            //           SliverList(
+            //             delegate: SliverChildListDelegate([
+            //               Padding(
+            //                 padding: const EdgeInsets.fromLTRB(
+            //                   16.0,
+            //                   16.0,
+            //                   16.0,
+            //                   0.0,
+            //                 ),
+            //                 child: Column(
+            //                   crossAxisAlignment: CrossAxisAlignment.start,
+            //                   children: [
+            //                     Text(
+            //                       AppLocalizations.of(context)
+            //                           .home_screen_featured_products,
+            //                       style: TextStyle(fontSize: 16),
+            //                     ),
+            //                   ],
+            //                 ),
+            //               ),
+            //               SingleChildScrollView(
+            //                 child: Column(
+            //                   children: [
+            //                     Padding(
+            //                       padding: const EdgeInsets.fromLTRB(
+            //                         4.0,
+            //                         16.0,
+            //                         8.0,
+            //                         0.0,
+            //                       ),
+            //                       child: buildHomeFeaturedProducts(context),
+            //                     ),
+            //                   ],
+            //                 ),
+            //               ),
+            //               Container(
+            //                 height: 80,
+            //               )
+            //             ]),
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //     Align(
+            //         alignment: Alignment.center,
+            //         child: buildProductLoadingContainer())
+            //   ],
+            // )),
       ),
-    );
+    ));
   }
 
   buildHomeFeaturedProducts(context) {
@@ -1334,7 +1343,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               Container(
                 child: InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>CampaignPage()));
                   },
                   child: Row(
                     children: [
@@ -1349,7 +1358,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               Container(
                 child: InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>OfferPage()));
                   },
                   child: Row(
                     children: [
@@ -1364,7 +1373,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               Container(
                 child: InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>LivePage()));
                   },
                   child: Row(
                     children: [

@@ -2,7 +2,6 @@ import 'package:active_ecommerce_flutter/custom/toast_component.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:active_ecommerce_flutter/screens/campagin.dart';
 import 'package:active_ecommerce_flutter/screens/livePage.dart';
-import 'package:active_ecommerce_flutter/screens/offerPage.dart';
 import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -11,27 +10,25 @@ import '../my_theme.dart';
 import 'filter.dart';
 import 'main.dart';
 
-class NotificationPage extends StatefulWidget {
-  NotificationPage({Key key,this.show_back_button = true, this.go_back = false}) : super(key: key);
+class OfferPage extends StatefulWidget {
+  OfferPage({Key key,this.show_back_button = true, this.go_back = false}) : super(key: key);
   bool show_back_button;
   bool go_back;
   @override
-  State<NotificationPage> createState() => _NotificationPageState();
+  State<OfferPage> createState() => _OfferPageState();
 }
 
-class _NotificationPageState extends State<NotificationPage> {
+class _OfferPageState extends State<OfferPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     final double statusBarHeight = 10;
     final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
     return Scaffold(
-      // appBar: buildAppBar(statusBarHeight, context),
-      body: SafeArea(
-        child: WebView(
-          initialUrl: 'https://ebhubon.net/users/login',
-          javascriptMode: JavascriptMode.unrestricted,
-        ),
+      appBar: buildAppBar(statusBarHeight, context),
+      body: WebView(
+        initialUrl: 'https://ebhubon.net/offers',
+        javascriptMode: JavascriptMode.unrestricted,
       ),
     );
   }
@@ -114,19 +111,19 @@ class _NotificationPageState extends State<NotificationPage> {
       ),
       backgroundColor: Colors.white,
       leading: GestureDetector(
-        onTap: () {
-          _scaffoldKey.currentState.openDrawer();
-        },
-        child: Builder(
-          builder: (context) => IconButton(
-              icon: Icon(Icons.arrow_back, color: MyTheme.dark_grey),
-              onPressed: () {
-                // if (!widget.go_back) {
-                //   return;
-                // }
-                return Navigator.of(context).pop();
-              }),
-        )
+          onTap: () {
+            _scaffoldKey.currentState.openDrawer();
+          },
+          child: Builder(
+            builder: (context) => IconButton(
+                icon: Icon(Icons.arrow_back, color: MyTheme.dark_grey),
+                onPressed: () {
+                  // if (!widget.go_back) {
+                  //   return;
+                  // }
+                  return Navigator.of(context).pop();
+                }),
+          )
       ),
       title: Container(
         height: kToolbarHeight +

@@ -1,3 +1,5 @@
+import 'package:active_ecommerce_flutter/screens/livePage.dart';
+import 'package:active_ecommerce_flutter/screens/offerPage.dart';
 import 'package:active_ecommerce_flutter/screens/under_maintainence_page.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
@@ -11,6 +13,7 @@ import 'package:active_ecommerce_flutter/app_config.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'campagin.dart';
 import 'filter.dart';
 import 'main.dart';
 
@@ -47,7 +50,7 @@ class _CategoryListState extends State<CategoryList> {
           key: _scaffoldKey,
           drawer: MainDrawer(),
           backgroundColor: Colors.white,
-          appBar: buildAppBar(statusBarHeight, context),
+          // appBar: buildAppBar(statusBarHeight, context),
           body: Stack(children: [
             CustomScrollView(
               slivers: [
@@ -101,7 +104,7 @@ class _CategoryListState extends State<CategoryList> {
               Container(
                 child: InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>CampaignPage()));
                   },
                   child: Row(
                     children: [
@@ -116,7 +119,7 @@ class _CategoryListState extends State<CategoryList> {
               Container(
                 child: InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>OfferPage()));
                   },
                   child: Row(
                     children: [
@@ -131,7 +134,7 @@ class _CategoryListState extends State<CategoryList> {
               Container(
                 child: InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>LivePage()));
                   },
                   child: Row(
                     children: [

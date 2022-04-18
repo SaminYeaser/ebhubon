@@ -1,6 +1,9 @@
 import 'package:active_ecommerce_flutter/app_config.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:active_ecommerce_flutter/other_config.dart';
+import 'package:active_ecommerce_flutter/screens/campagin.dart';
+import 'package:active_ecommerce_flutter/screens/livePage.dart';
+import 'package:active_ecommerce_flutter/screens/offerPage.dart';
 import 'package:active_ecommerce_flutter/screens/under_maintainence_page.dart';
 import 'package:active_ecommerce_flutter/social_config.dart';
 import 'package:flutter/material.dart';
@@ -584,7 +587,7 @@ class _LoginState extends State<Login> {
               Container(
                 child: InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>CampaignPage()));
                   },
                   child: Row(
                     children: [
@@ -599,7 +602,7 @@ class _LoginState extends State<Login> {
               Container(
                 child: InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>OfferPage()));
                   },
                   child: Row(
                     children: [
@@ -614,7 +617,7 @@ class _LoginState extends State<Login> {
               Container(
                 child: InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>LivePage()));
                   },
                   child: Row(
                     children: [

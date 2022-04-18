@@ -1,3 +1,6 @@
+import 'package:active_ecommerce_flutter/screens/campagin.dart';
+import 'package:active_ecommerce_flutter/screens/livePage.dart';
+import 'package:active_ecommerce_flutter/screens/offerPage.dart';
 import 'package:active_ecommerce_flutter/screens/under_maintainence_page.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
@@ -151,7 +154,7 @@ class _ProductReviewsState extends State<ProductReviews> {
       textDirection: app_language_rtl.$ ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
           backgroundColor: Colors.white,
-          appBar: buildAppBar(statusBarHeight,context),
+          // appBar: buildAppBar(statusBarHeight,context),
           body: Stack(
             children: [
               RefreshIndicator(
@@ -238,7 +241,7 @@ class _ProductReviewsState extends State<ProductReviews> {
               Container(
                 child: InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>CampaignPage()));
                   },
                   child: Row(
                     children: [
@@ -253,7 +256,7 @@ class _ProductReviewsState extends State<ProductReviews> {
               Container(
                 child: InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>OfferPage()));
                   },
                   child: Row(
                     children: [
@@ -268,7 +271,7 @@ class _ProductReviewsState extends State<ProductReviews> {
               Container(
                 child: InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>LivePage()));
                   },
                   child: Row(
                     children: [

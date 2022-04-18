@@ -38,7 +38,7 @@ class _MainState extends State<Main> {
       is_base_category: true,
     ),
     Cart(has_bottomnav: true),
-    UnderMaintainencePage(),
+    NotificationPage(),
     Profile(),
   ];
 
@@ -94,105 +94,105 @@ class _MainState extends State<Main> {
           //     elevation: 0.0,
           //   ),
           // ),
-          bottomNavigationBar: BottomAppBar(
-            // color: Colors.transparent,
-            clipBehavior: Clip.antiAlias,
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
-              child: BottomNavigationBar(
-                type: BottomNavigationBarType.fixed,
-                onTap: onTapped,
-                currentIndex: _currentIndex,
-                backgroundColor: Colors.white.withOpacity(0.8),
-                fixedColor: Theme.of(context).accentColor,
-                unselectedItemColor: Color.fromRGBO(153, 153, 153, 1),
-                items: [
-                  BottomNavigationBarItem(
-                      icon: Image.asset(
-                        "assets/home.png",
-                        color: _currentIndex == 0
-                            ? Theme.of(context).accentColor
-                            : Color.fromRGBO(153, 153, 153, 1),
-                        height: 20,
-                      ),
-                      label: '${AppLocalizations.of(context).main_screen_bottom_navigation_home}'
-                      // title: Padding(
-                      //   padding: const EdgeInsets.all(8.0),
-                      //   child: Text(
-                      //     AppLocalizations.of(context).main_screen_bottom_navigation_home,
-                      //     style: TextStyle(fontSize: 12),
-                      //   ),
-                      // ),
-                  ),
-                  BottomNavigationBarItem(
-                      icon: Image.asset(
-                        "assets/categories.png",
-                        color: _currentIndex == 1
-                            ? Theme.of(context).accentColor
-                            : Color.fromRGBO(153, 153, 153, 1),
-                        height: 20,
-                      ),
-                      label: '${AppLocalizations.of(context).main_screen_bottom_navigation_categories}'
-                      // title: Padding(
-                      //   padding: const EdgeInsets.all(8.0),
-                      //   child: Text(
-                      //     AppLocalizations.of(context).main_screen_bottom_navigation_categories,
-                      //     style: TextStyle(fontSize: 12),
-                      //   ),
-                      // ),
-                  ),
-                  // BottomNavigationBarItem(
-                  //   icon: Image.asset('assets/square_logo.png'),
-                  //   label: ''
-                  //   // title: Text(""),
-                  // ),
-                  BottomNavigationBarItem(
-                      icon: Image.asset(
-                        "assets/cart.png",
-                        color: _currentIndex == 2
-                            ? Theme.of(context).accentColor
-                            : Color.fromRGBO(153, 153, 153, 1),
-                        height: 20,
-                      ),
-                      label: '${AppLocalizations.of(context).main_screen_bottom_navigation_cart}',
-                      // title: Padding(
-                      //   padding: const EdgeInsets.all(8.0),
-                      //   child: Text(
-                      //     AppLocalizations.of(context).main_screen_bottom_navigation_cart,
-                      //     style: TextStyle(fontSize: 12),
-                      //   ),
-                      // ),
-                  ),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.notifications,
-                        color: _currentIndex == 5
-                            ? Theme.of(context).accentColor
-                            : Color.fromRGBO(153, 153, 153, 1),
-                      ),
-                    // label: '${AppLocalizations.of(context).main_screen_bottom_navigation_notification}',
-                    label: 'Notification'
-                  ),
-                  BottomNavigationBarItem(
-                      icon: Image.asset(
-                        "assets/profile.png",
-                        color: _currentIndex == 4
-                            ? Theme.of(context).accentColor
-                            : Color.fromRGBO(153, 153, 153, 1),
-                        height: 20,
-                      ),
-                      label: '${AppLocalizations.of(context).main_screen_bottom_navigation_profile}',
-                      // title: Padding(
-                      //   padding: const EdgeInsets.all(8.0),
-                      //   child: Text(
-                      //     AppLocalizations.of(context).main_screen_bottom_navigation_profile,
-                      //     style: TextStyle(fontSize: 12),
-                      //   ),
-                      // ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          // bottomNavigationBar: BottomAppBar(
+          //   // color: Colors.transparent,
+          //   clipBehavior: Clip.antiAlias,
+          //   child: BackdropFilter(
+          //     filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
+          //     child: BottomNavigationBar(
+          //       type: BottomNavigationBarType.fixed,
+          //       onTap: onTapped,
+          //       currentIndex: _currentIndex,
+          //       backgroundColor: Colors.white.withOpacity(0.8),
+          //       fixedColor: Theme.of(context).accentColor,
+          //       unselectedItemColor: Color.fromRGBO(153, 153, 153, 1),
+          //       items: [
+          //         BottomNavigationBarItem(
+          //             icon: Image.asset(
+          //               "assets/home.png",
+          //               color: _currentIndex == 0
+          //                   ? Theme.of(context).accentColor
+          //                   : Color.fromRGBO(153, 153, 153, 1),
+          //               height: 20,
+          //             ),
+          //             label: '${AppLocalizations.of(context).main_screen_bottom_navigation_home}'
+          //             // title: Padding(
+          //             //   padding: const EdgeInsets.all(8.0),
+          //             //   child: Text(
+          //             //     AppLocalizations.of(context).main_screen_bottom_navigation_home,
+          //             //     style: TextStyle(fontSize: 12),
+          //             //   ),
+          //             // ),
+          //         ),
+          //         BottomNavigationBarItem(
+          //             icon: Image.asset(
+          //               "assets/categories.png",
+          //               color: _currentIndex == 1
+          //                   ? Theme.of(context).accentColor
+          //                   : Color.fromRGBO(153, 153, 153, 1),
+          //               height: 20,
+          //             ),
+          //             label: '${AppLocalizations.of(context).main_screen_bottom_navigation_categories}'
+          //             // title: Padding(
+          //             //   padding: const EdgeInsets.all(8.0),
+          //             //   child: Text(
+          //             //     AppLocalizations.of(context).main_screen_bottom_navigation_categories,
+          //             //     style: TextStyle(fontSize: 12),
+          //             //   ),
+          //             // ),
+          //         ),
+          //         // BottomNavigationBarItem(
+          //         //   icon: Image.asset('assets/square_logo.png'),
+          //         //   label: ''
+          //         //   // title: Text(""),
+          //         // ),
+          //         BottomNavigationBarItem(
+          //             icon: Image.asset(
+          //               "assets/cart.png",
+          //               color: _currentIndex == 2
+          //                   ? Theme.of(context).accentColor
+          //                   : Color.fromRGBO(153, 153, 153, 1),
+          //               height: 20,
+          //             ),
+          //             label: '${AppLocalizations.of(context).main_screen_bottom_navigation_cart}',
+          //             // title: Padding(
+          //             //   padding: const EdgeInsets.all(8.0),
+          //             //   child: Text(
+          //             //     AppLocalizations.of(context).main_screen_bottom_navigation_cart,
+          //             //     style: TextStyle(fontSize: 12),
+          //             //   ),
+          //             // ),
+          //         ),
+          //         BottomNavigationBarItem(
+          //             icon: Icon(Icons.notifications,
+          //               color: _currentIndex == 5
+          //                   ? Theme.of(context).accentColor
+          //                   : Color.fromRGBO(153, 153, 153, 1),
+          //             ),
+          //           // label: '${AppLocalizations.of(context).main_screen_bottom_navigation_notification}',
+          //           label: 'Notification'
+          //         ),
+          //         BottomNavigationBarItem(
+          //             icon: Image.asset(
+          //               "assets/profile.png",
+          //               color: _currentIndex == 4
+          //                   ? Theme.of(context).accentColor
+          //                   : Color.fromRGBO(153, 153, 153, 1),
+          //               height: 20,
+          //             ),
+          //             label: '${AppLocalizations.of(context).main_screen_bottom_navigation_profile}',
+          //             // title: Padding(
+          //             //   padding: const EdgeInsets.all(8.0),
+          //             //   child: Text(
+          //             //     AppLocalizations.of(context).main_screen_bottom_navigation_profile,
+          //             //     style: TextStyle(fontSize: 12),
+          //             //   ),
+          //             // ),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
         ),
       ),
     );

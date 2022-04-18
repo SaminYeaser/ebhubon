@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:835571763337:android:f6a0e8a9517a55ff8f5e58",
         "android_client_info": {
-          "package_name": "com.ebhubon.app"
+          "package_name": "com.ebhubon.ebhubon"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "835571763337-6e7l7rab6gc6p2vlr35lv1tmer4dekn4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.ebhubon.app",
+            "package_name": "com.ebhubon.ebhubon",
             "certificate_hash": "b13a53cff89a07171f9b6e148e24697cec03d52f"
           }
         },

@@ -1,3 +1,6 @@
+import 'package:active_ecommerce_flutter/screens/campagin.dart';
+import 'package:active_ecommerce_flutter/screens/livePage.dart';
+import 'package:active_ecommerce_flutter/screens/offerPage.dart';
 import 'package:active_ecommerce_flutter/screens/shipping_info.dart';
 import 'package:active_ecommerce_flutter/screens/under_maintainence_page.dart';
 import 'package:flutter/material.dart';
@@ -499,7 +502,7 @@ class _CartState extends State<Cart> {
               Container(
                 child: InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>CampaignPage()));
                   },
                   child: Row(
                     children: [
@@ -514,7 +517,7 @@ class _CartState extends State<Cart> {
               Container(
                 child: InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>OfferPage()));
                   },
                   child: Row(
                     children: [
@@ -529,7 +532,7 @@ class _CartState extends State<Cart> {
               Container(
                 child: InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderMaintainencePage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>LivePage()));
                   },
                   child: Row(
                     children: [
